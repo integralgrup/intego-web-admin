@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../intego-penta"
+		},
+		{
+			"path": "../../../wepadbol-web-admin"
+		}
+	],
+	"settings": {}
+}
