@@ -18,14 +18,14 @@
             <div class="min-md:absolute min-md:top-[27%] min-md:left-[10%]  min-md:-translate-y-1/2 min-md:w-2/3 min-md:flex min-md:justify-between md:w-full">
                 <div class="indexTextCarousel overflow-hidden isolate min-md:mr-[42%] xs:mr-0  relative">
                     <div class="swiper-wrapper">
-                        <?php for ($i = 1; $i <= 4; $i++) : ?>
+                        <?php foreach ($slider as $key => $item) : ?>
                             <div class="swiper-slide group">
                                 <div dir class="text-editor md:items-center duration-1000  editor-h1:text-secondary 2xl:editor-h1:!text-[44px] lg:editor-h1:!text-[30px] sm:px-[10px] [&>h1>span]:text-[#1679BE] editor-h1:font-bold editor-p:text-gray group-[&.rtl]/html:editor-p:text-black editor-p:font-medium editor-p:leading-[28px] editor-p:max-w-[380px] editor-h1:max-w-[700px] sm:editor-h1:max-w-[500px] sm:editor-h1:text-center sm:editor-p:text-center sm:editor-h1:!text-[22px]">
-                                    <h1><span>We Produce</span> The World’s Entertainment</h1>
-                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                                    <h1>{!!$item->slide_title!!}</h1>
+                                    <p>{{$item->title_2}}</p>
                                 </div>
                             </div>
-                        <?php endfor; ?>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -33,26 +33,13 @@
             <div class="relative">
                 <div class="indexMaskCarousel  overflow-hidden isolate min-md:[mask-image:url('../../assets/image/ındex.svg')] min-md:[-webkit-mask-size:contain] min-md:[mask-repeat:no-repeat] min-md:[mask-position:top_right] relative min-md:mr-[-100px]">
                     <div class="swiper-wrapper">
+                        <?php foreach ($slider as $key => $item) : ?>
                         <div class="swiper-slide px-[10px]">
                             <div class="image w-full h-full md:h-[500px] sm:h-[400px] xs:h-[350px] 2xs:h-[300px]">
-                                <img class="w-full h-full object-contain md:object-cover object-center md:rounded-[40px]" src="../assets/image/project/rectangle2.png">
+                                <img class="w-full h-full object-contain md:object-cover object-center md:rounded-[40px]" src="{{ asset( getFolder(['uploads_folder', 'images_folder'], $item->lang) . '/' . $item->image ) }}">
                             </div>
                         </div>
-                        <div class="swiper-slide px-[10px]">
-                            <div class="image w-full h-full md:h-[500px] sm:h-[400px] xs:h-[350px] 2xs:h-[300px]">
-                                <img class="w-full h-full object-contain md:object-cover object-center md:rounded-[40px]" src="../assets/image/project/rectangle3.png">
-                            </div>
-                        </div>
-                        <div class="swiper-slide px-[10px]">
-                            <div class="image w-full h-full md:h-[500px] sm:h-[400px] xs:h-[350px] 2xs:h-[300px]">
-                                <img class="w-full h-full object-contain md:object-cover object-center md:rounded-[40px]" src="../assets/image/project/rectangle4.png">
-                            </div>
-                        </div>
-                        <div class="swiper-slide px-[10px]">
-                            <div class="image w-full h-full md:h-[500px] sm:h-[400px] xs:h-[350px] 2xs:h-[300px]">
-                                <img class="w-full h-full object-contain md:object-cover object-center md:rounded-[40px]" src="../assets/image/project/rectangle5.png">
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
                 <img class="lg:hidden absolute -z-10 top-[-35px] right-[-40px] w-full h-full object-contain image-animate pointer-events-none" src="../assets/image/frame.png" alt="">
@@ -81,42 +68,40 @@
         </div>
         <div data-paginationLoad class="lg:mt-[-30px] absolute !w-[200px] h-fit lg:!bottom-0 !right-[40%] md:hidden !translate-x-1/2 !left-auto  !top-[30%] !translate-y-1/2 lg:hidden  lasting-paginations [&_span]:w-[25px] [&_span]:h-[25px] [&_span]:animateConic [&_span]:opacity-100 [&_span]:bg-transparent [&_span]:relative [&_span]:z-10 [&_span]:before:absolute [&_span]:before:top-1/2 [&_span]:before:left-1/2 [&_span]:before:-translate-x-1/2 [&_span]:before:-translate-y-1/2 [&_span]:before:w-[10px] [&_span]:before:h-[10px] [&_span]:before:rounded-full [&_span.swiper-pagination-bullet-active]:before:bg-secondary [&_span]:before:bg-[#F2F3F5] "></div>
     </section>
-
+ 
 
     <section id="about" class="Slider-about py-28 lg:py-20 sm:pb-12 sm:pt-0 relative overflow-hidden sens">
         <div class="container max-w-[1520px] mx-auto">
             <div class="wrapper grid grid-cols-2 lg:grid-cols-1 gap-[125px] 2xl:gap-[50px] xl:gap-[30px] lg:gap-[60px] xs:gap-[80px]">
                 <div class="flex flex-col gap-[60px]">
                     <div dir class="text-editor editor-h2:text-secondary [&>h2>span]:text-[#1679BE] editor-h2:font-bold max-w-[700px] md:editor-h2:text-center md:editor-h2:justify-center">
-                        <h2><span>Intego produces outdoor</span> playgrounds and equipment</h2>
+                        <h2>{!!$about->title!!}</h2>
                     </div>
 
                     <div class="swiper mobileCards relative w-full h-full overflow-visible">
                         <ul class="swiper-wrapper w-full h-fit">
                             <li class="swiper-slide group/slide relative text-center items-center flex justify-center lg:rounded-lg ">
                                 <div class="aspect-[43/43] h-[430px] sm:aspect-[30/30] sm:h-[300px] group-[&.swiper-slide-active]/slide:blur-0 blur-[5px] duration-500 transition-all ease-in-out">
-                                    <img class="w-full h-full rounded-[30px] object-cover object-center" src="../assets/image/rectangle15.jpeg" alt="">
+                                    <img class="w-full h-full rounded-[30px] object-cover object-center" src="{{ asset( getFolder(['uploads_folder', 'images_folder'], $about->lang) . '/' . $about->image ) }}" alt="">
                                 </div>
                             </li>
                             <li class="swiper-slide group/slide relative text-center items-center flex justify-center lg:rounded-lg ">
                                 <div class="aspect-[43/43] h-[430px] sm:aspect-[30/30] sm:h-[300px] group-[&.swiper-slide-active]/slide:blur-0 blur-[5px] duration-500 transition-all ease-in-out">
-                                    <img class="w-full h-full rounded-[30px] object-cover object-center" src="../assets/image/rectangle14.jpeg" alt="">
+                                    <img class="w-full h-full rounded-[30px] object-cover object-center" src="{{ asset( getFolder(['uploads_folder', 'images_folder'], $about->lang) . '/' . $about->banner_image ) }}" alt="">
                                 </div>
                             </li>
                             <li class="swiper-slide group/slide relative text-center items-center flex justify-center lg:rounded-lg ">
                                 <div class="aspect-[43/43] h-[430px] sm:aspect-[30/30] sm:h-[300px] group-[&.swiper-slide-active]/slide:blur-0 blur-[5px] duration-500 transition-all ease-in-out">
-                                    <img class="w-full h-full rounded-[30px] object-cover object-center" src="../assets/image/rectangle13.jpeg" alt="">
+                                    <img class="w-full h-full rounded-[30px] object-cover object-center" src="{{ asset( getFolder(['uploads_folder', 'images_folder'], $about->lang) . '/' . $about->image ) }}" alt="">
                                 </div>
                             </li>
-
                         </ul>
                     </div>
                 </div>
                 <div id="" class="text-content flex flex-col justify-end items-start">
                     <div dir class="text-contents text-editor pb-[50px] lg:text-center lg:items-center editor-h3:text-gray/30 editor-h3:font-semibold editor-p:font-medium editor-h3:max-w-[630px] editor-p:max-w-[630px] editor-p:text-gray">
-                        <h3 class="text"> Intego contributes to make the world more enjoyable with game groups it produces </h3>
-                        <p>With 15 years of experience, we are working to make cities more livable with our Children'sPlaygrounds, Outdoor Sports Equipment, Rubber Floor Covering and Urban Furniture products.</p>
-                        <p>As Intego, we offer hundreds of different products to our valued customers with our high quality understanding and modern productionfacility. </p>
+                        <h3 class="text"> {{$about->upper_title}} </h3>
+                        <p>{!!$about->description!!}</p>
                     </div>
                     <button class="bg-secondary rounded-full px-7 py-4 sm:w-full [box-shadow:10px_10px_30px_0px_rgba(249,_177,_0,_0.25)] before:absolute before:left-0 before:top-0 before:hover:top-full before:w-full before:h-full before:hover:bg-[#FFD61B] overflow-hidden isolate relative before:duration-500">
                         <a class="flex items-center justify-center gap-[15px]" href="page-about.php">
@@ -133,71 +118,30 @@
 
 
     <div class="tab-contents w-full overflow-hidden  relative transition-all duration-450 py-10 xs:pt-0 sens">
-        <div class="absolute top-[-15%] left-[-10%] pointer-events-none z-[-1]">
-            <img class="" src="../assets/image/yellowshadow.png" alt="">
-        </div>
-        <div class="absolute top-[-15%] right-[-10%] pointer-events-none z-[-1]">
-            <img class="" src="../assets/image/yellowshadow.png" alt="">
-        </div>
-        <div class="absolute bottom-[-15%] left-[-10%] pointer-events-none z-[-1]">
-            <img class="" src="../assets/image/yellowshadow.png" alt="">
-        </div>
-        <div class="absolute bottom-[-15%] right-[-10%] pointer-events-none z-[-1]">
-            <img class="" src="../assets/image/yellowshadow.png" alt="">
-        </div>
+        
         <div class="container max-w-[1600px] mx-auto">
-            <?php $list = [
-                [
-                    "icon-1" => "1",
-                    "icon-2" => "1",
-                    "icon-position" => "right",
-                ],
-                [
-                    "icon-1" => "2",
-                    "icon-2" => "2",
-                    "icon-position" => "right",
-                ],
-                [
-                    "icon-1" => "3",
-                    "icon-2" => "3",
-                    "icon-position" => "right",
-                ],
-                [
-                    "icon-1" => "4",
-                    "icon-2" => "4",
-                    "icon-position" => "right",
-                ],
-
-            ]; ?>
+            <?php  $list = []; 
+                foreach($slider2 as $key => $item): 
+                    $list[] =[
+                        "icon-1" => $key + 1,
+                        "icon-2" => $key + 1,
+                        "icon-position" => "right",
+                    ];
+                endforeach;
+            ?>
             <div class=" content active  overflow-visible absolute left-0 top-0 w-full h-full transition-all duration-700 opacity-0 delay-200 translate-y-[50px] [&.active]:opacity-100 [&.active]:delay-500 [&.active]:translate-y-0 [&.active]:relative [&.active]:pointer-events-auto" data-content-id="0">
                 <div class="wrapper relative max-w-[1600px] xl:max-w-[1100px] lg:max-w-[900px] mx-auto ">
                     <div class="absolute bottom-10 sm:bottom-5 left-1/2 -translate-x-1/2 z-20 ">
                         <div class="swiperImageLine w-full max-w-[800px] sm:max-w-[400px] overflow-visible animate-carousel">
                             <div class="swiper-wrapper">
+                                <?php foreach($slider2 as $key => $item): ?>
                                 <div class="swiper-slide">
                                     <div dir class="text-editor xs:px-[55px] editor-h2:text-white sm:editor-h2:text-[16px] sm:editor-p:text-[15px] editor-h2:font-bold editor-h2:text-center editor-p:text-white/75 editor-p:font-medium editor-p:text-center editor-p:max-w-[710px] lg:editor-p:max-w-[600px] sm:editor-p:max-w-[380px] xs:editor-p:max-w-[250px] editor-p:line-clamp-2 lg:items-center lg:text-center">
-                                        <h2>Reliable Equipment</h2>
-                                        <p>As Intego, we offer hundreds of different products to our valued customers with our high quality understanding and modern productionfacility.</p>
+                                        <h2>{{$item->title}}</h2>
+                                        <p>{{$item->description}}</p>
                                     </div>
                                 </div>
-                                <div class="swiper-slide">
-                                    <div dir class="text-editor xs:px-[55px] editor-h2:text-white sm:editor-h2:text-[16px] sm:editor-p:text-[15px] editor-h2:font-bold editor-h2:text-center editor-p:text-white/75 editor-p:font-medium editor-p:text-center editor-p:max-w-[710px] lg:editor-p:max-w-[600px] sm:editor-p:max-w-[380px] xs:editor-p:max-w-[250px] editor-p:line-clamp-2 lg:items-center lg:text-center">
-                                        <h2>Örnek 2</h2>
-                                        <p>As Intego, we offer hundreds of different products to our valued customers with our high quality understanding and modern productionfacility.</p>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div dir class="text-editor xs:px-[55px] editor-h2:text-white sm:editor-h2:text-[16px] sm:editor-p:text-[15px] editor-h2:font-bold editor-h2:text-center editor-p:text-white/75 editor-p:font-medium editor-p:text-center editor-p:max-w-[710px] lg:editor-p:max-w-[600px] sm:editor-p:max-w-[380px] xs:editor-p:max-w-[250px] editor-p:line-clamp-2 lg:items-center lg:text-center">
-                                        <h2>Örnek 3</h2>
-                                        <p>As Intego, we offer hundreds of different products to our valued customers with our high quality understanding and modern productionfacility.</p>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div dir class="text-editor xs:px-[55px] editor-h2:text-white sm:editor-h2:text-[16px] sm:editor-p:text-[15px] editor-h2:font-bold editor-h2:text-center editor-p:text-white/75 editor-p:font-medium editor-p:text-center editor-p:max-w-[710px] lg:editor-p:max-w-[600px] sm:editor-p:max-w-[380px] xs:editor-p:max-w-[250px] editor-p:line-clamp-2 lg:items-center lg:text-center">
-                                        <h2>Örnek 4</h2>
-                                        <p>As Intego, we offer hundreds of different products to our valued customers with our high quality understanding and modern productionfacility.</p>
-                                    </div>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
@@ -211,29 +155,13 @@
                     <div class="swiperTextLine w-full overflow-hidden relative rounded-full sm:rounded-[30px]">
 
                         <div class="swiper-wrapper">
+                            <?php foreach($slider2 as $key => $item): ?>
                             <div class="swiper-slide group/slide aspect-[155/85] h-[800px] xl:aspect-[110/55] xl:h-[550px] lg:w-full lg:h-full sm:h-[400px] xs:h-[300px] relative">
                                 <div class="image spect-[155/85] h-[800px] xl:aspect-[110/55] xl:h-[550px] lg:w-full lg:h-full sm:h-[400px] xs:h-[300px] sm:rounded-[30px] before:absolute  before:left-0 overflow-hidden isolate before:top-0 before:w-full before:h-full relative before:bg-gradient-to-t before:from-black/70 before:to-transparent before:z-20 before:pointer-events-none sm:before:rounded-[30px]">
-                                    <img class="w-full h-full object-cover object-center sm:rounded-[30px]" src="../assets/image/project/rectangle.png" data-swiper-parallax-x="50%" data-swiper-parallax-scale="2">
+                                    <img class="w-full h-full object-cover object-center sm:rounded-[30px]" src="{{ asset( getFolder(['uploads_folder', 'images_folder'], $item->lang) . '/' . $item->image ) }}" alt="" data-swiper-parallax-opacity="0" data-swiper-parallax-x="50%" data-swiper-parallax-scale="2">
                                 </div>
                             </div>
-                            <div class="swiper-slide group/slide spect-[155/85] h-[800px] xl:aspect-[110/55] xl:h-[550px] lg:w-full lg:h-full sm:h-[400px] xs:h-[300px] relative">
-                                <div class="image spect-[155/85] h-[800px] xl:aspect-[110/55] xl:h-[550px] lg:w-full lg:h-full sm:h-[400px] xs:h-[300px] sm:rounded-[30px] before:absolute  before:left-0  overflow-hidden isolatebefore:top-0 before:w-full before:h-full relative before:bg-gradient-to-t before:from-black/70 before:to-transparent before:z-20 before:pointer-events-none sm:before:rounded-[30px]">
-                                    <img class="w-full h-full object-cover object-center sm:rounded-[30px]" src="../assets/image/project/rectangle2.png" data-swiper-parallax-x="50%" data-swiper-parallax-scale="2">
-                                </div>
-
-                            </div>
-                            <div class="swiper-slide group/slide spect-[155/85] h-[800px] xl:aspect-[110/55] xl:h-[550px] lg:w-full lg:h-full sm:h-[400px] xs:h-[300px] relative">
-                                <div class="image spect-[155/85] h-[800px] xl:aspect-[110/55] xl:h-[550px] lg:w-full lg:h-full sm:h-[400px] xs:h-[300px] sm:rounded-[30px] before:absolute  before:left-0  overflow-hidden isolatebefore:top-0 before:w-full before:h-full relative before:bg-gradient-to-t before:from-black/70 before:to-transparent before:z-20 before:pointer-events-none sm:before:rounded-[30px]">
-                                    <img class="w-full h-full object-cover object-center sm:rounded-[30px]" src="../assets/image/project/rectangle3.png" data-swiper-parallax-x="50%" data-swiper-parallax-scale="2">
-                                </div>
-
-                            </div>
-                            <div class="swiper-slide group/slide spect-[155/85] h-[800px] xl:aspect-[110/55] xl:h-[550px] lg:w-full lg:h-full sm:h-[400px] xs:h-[300px] relative">
-                                <div class="image spect-[155/85] h-[800px] xl:aspect-[110/55] xl:h-[550px] lg:w-full lg:h-full sm:h-[400px] xs:h-[300px] sm:rounded-[30px] before:absolute  before:left-0  overflow-hidden isolatebefore:top-0 before:w-full before:h-full relative before:bg-gradient-to-t before:from-black/70 before:to-transparent before:z-20 before:pointer-events-none sm:before:rounded-[30px]">
-                                    <img class="w-full h-full object-cover object-center sm:rounded-[30px]" src="../assets/image/project/rectangle4.png" data-swiper-parallax-x="50%" data-swiper-parallax-scale="2">
-                                </div>
-
-                            </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                     <?php foreach ($list as $key => $item) : ?>
@@ -282,14 +210,14 @@
                     <div class="slide-area w-full">
                         <div class="other-products-slider overflow-visible animate-carousel">
                             <div class="swiper-wrapper">
-                                <?php for ($i = 0; $i < 10; $i++) : ?>
+                                <?php foreach ($products as $key => $item) : ?>
                                     <div class="swiper-slide relative group/item">
                                         <div class="absolute top-[-10px] right-8 z-10 group-[&.swiper-slide-active]/item:!opacity-100 !opacity-0 xl:hidden ">
                                             <i class="icon icon-arrow-right-2 -rotate-45 flex items-center justify-center text-white bg-secondary hover:bg-[#1679BE] duration-500 p-8  md:p-5 rounded-full text-[12px]"></i>
                                         </div>
                                         <div class="item aspect-[48/48] h-[480px] 2xl:aspect-[40/40] 2xl:max-w-[400px] sm:max-w-[350px] xs:max-w-[300px] 2xl:h-[400px] xl:h-[380px] xl:aspect-[38/38] sm:aspect-[35/35] sm:h-[350px] xs:aspect-[30/30] xs:h-[300px] relative w-full [mask-image:url('../../assets/image/product3.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] group-hover/item:bg-[#FEF7E5] group-[&.swiper-slide-active]/item:bg-[#FEF7E5] min-md:group-[&.swiper-slide-active]/item:-translate-y-16 lg:group-[&.swiper-slide-active]/item:translate-y-0 duration-500 ">
-                                            <a href="page-product.php" class="block aspect-[48/48] h-[480px] 2xl:aspect-[40/40] 2xl:h-[400px] xl:h-[380px] xl:aspect-[38/38] sm:aspect-[35/35] sm:h-[350px] xs:aspect-[30/30] xs:h-[300px]">
-                                                <img class="w-full h-full object-contain object-center" src="../assets/image/product/rectangle1.png" alt="">
+                                            <a href="{{$item->seo_url}}" class="block aspect-[48/48] h-[480px] 2xl:aspect-[40/40] 2xl:h-[400px] xl:h-[380px] xl:aspect-[38/38] sm:aspect-[35/35] sm:h-[350px] xs:aspect-[30/30] xs:h-[300px]">
+                                                <img class="w-full h-full object-contain object-center" src="{{ asset( getFolder(['uploads_folder', 'product_images_folder'], $item->lang) . '/' . $item->image ) }}" alt="">
                                             </a>
                                         </div>
                                         <div class="absolute top-0 left-0 z-[-1] pointer-events-none aspect-[48/48] h-[480px] 2xl:aspect-[40/40] sm:hidden 2xl:h-[400px] xl:h-[380px] xl:aspect-[38/38] sm:aspect-[35/35] sm:h-[350px] xs:aspect-[30/30] xs:h-[300px] group-[&.swiper-slide-active]/item:-rotate-6 group-hover/item:-rotate-6 group-[&.swiper-slide-active]/item:-translate-y-16 2xl:group-[&.swiper-slide-active]/item:-translate-y-20 xl:group-[&.swiper-slide-active]/item:-translate-y-24 lg:group-[&.swiper-slide-active]/item:translate-y-0 duration-500 isolate p-1">
@@ -297,10 +225,10 @@
                                         </div>
 
                                         <div class="absolute left-[42%] bottom-[-5%] group-[&.swiper-slide-active]/item:-translate-y-16 lg:group-[&.swiper-slide-active]/item:translate-y-0 bg-[#0F62AB] p-5 rounded-full max-w-[220px]">
-                                            <span class="text-white text-center font-bold text-[20px] sm:text-[18px] xs:text-[16px] leading-[30px] line-clamp-2">IN-100</span>
+                                            <span class="text-white text-center font-bold text-[20px] sm:text-[18px] xs:text-[16px] leading-[30px] line-clamp-2">{{$item->title}}</span>
                                         </div>
                                     </div>
-                                <?php endfor; ?>
+                                <?php endforeach ?>
                             </div>
                         </div>
                         <div class="flex items-center justify-center gap-[40px] mt-[70px]">
@@ -627,7 +555,7 @@
                             <?php if (isset($item['countries'])) {
                                 foreach ($item['countries'] as $index => $country) : ?>
                                     <div class="main-content swiper-slide main-content-mobile hidden w-full absolute left-0 top-0 opacity-0 transition-all duration-450 group [&.active]:static [&.active]:block [&.active]:opacity-100 <?= $key == 0 ? 'active' : '' ?>" data-content-id="<?= $key ?>">
-                                        <div class="item relative group/item h-[600px] sm:h-[460px] <?= $i == 0 ? 'reveal' : '' ?>">
+                                        <div class="item relative group/item h-[600px] sm:h-[460px] <?= $index == 0 ? 'reveal' : '' ?>">
                                             <div class="image-wrapper w-full h-[500px] sm:h-[320px] relative">
                                                 <a href="project-detail.php" class="block w-full h-full">
                                                     <img src="../assets/image/project/rectangle2.png" alt="Project" width="800" height="500" class="w-full h-full object-cover  rounded-[20px]">
@@ -743,7 +671,7 @@
         <div class="wrapper pl-[150px] 2xl:pl-[30px] md:pl-0 md:py-8 md:rounded-[50px] md:bg-[#FEF7E5]">
             <div class="swiperNewCarousel !overflow-hidden animate-carousel w-full">
                 <div class="swiper-wrapper">
-                    <?php for ($i = 1; $i <= 10; $i++) : ?>
+                    <?php foreach ($blogs as $item) : ?>
                         <a href="page-new.php" class="swiper-slide w-full group/slide block">
                             <div class="flex md:flex-col items-center gap-[70px] group-[&.rtl]/html:gap-[20px] 2xl:gap-[40px] md:gap-4 relative">
                                 <div class="absolute md:hidden top-[10%] right-[15%] group-[&.rtl]/html:right-auto group-[&.rtl]/html:left-[15%] !opacity-0 group-[&.swiper-slide-active]/slide:!opacity-100 duration-500 [box-shadow:10px_10px_30px_0px_rgba(249,_177,_0,_0.15)] rounded-full">
@@ -756,21 +684,21 @@
                                     <img src="../assets/image/newdetailblue.png" alt="">
                                 </div>
                                 <div class="image aspect-[48/48] lg:aspect-[40/40] lg:h-[400px] h-[480px] md:aspect-[35/35] md:h-[350px] sm:aspect-[30/30] sm:h-[300px] [mask-image:url('../../assets/image/newdetail.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center]">
-                                    <img class="w-full h-full object-cover object-center" src="../assets/image/trademark/newdetail.jpeg" alt="">
+                                    <img class="w-full h-full object-cover object-center" src="{{ asset( getFolder(['uploads_folder','blog_images_folder'], $item->lang) . '/' . $item->image ) }}" alt="">
                                 </div>
                                 <div>
                                     <div class="text-editor group-[&.rtl]/html:max-w-[400px] sm:px-[30px] md:text-center md:items-center editor-p:text-gray [&_:is(h1,h2,h3,h4,h5)]:text-black [&_:is(h1,h2,h3,h4,h5)]:!m-0 [&_:is(h1,h2,h3,h4,h5)]:font-bold editor-h3:max-w-[410px] editor-p:max-w-[460px] lg:editor-p:max-w-[400px]">
                                         <div class="flex items-center gap-[24px] [&>span]:text-gray [&>span]:font-medium">
                                             <i class="icon icon-calendar flex items-center justify-center text-secondary"></i>
-                                            <span>17 January 2024</span>
+                                            <span>{{date('d M Y', strtotime($item->created_at))}}</span>
                                         </div>
-                                        <h3>As Intego, We Produce Playgrounds for Every Area</h3>
-                                        <p>As Intego, we offer hundreds of different products to our valued customers with our high quality understanding and modern productionfacility.</p>
+                                        <h3>{{$item->title}}</h3>
+                                        <p>{!! mb_substr($item->description, 0, 100) !!}...</p>
                                     </div>
                                 </div>
                             </div>
                         </a>
-                    <?php endfor; ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
             <div class="hidden md:flex items-center justify-center text-center sm:w-full px-[30px] mt-[40px]">
@@ -801,5 +729,466 @@
 @endsection
 
 @section('scripts')
+<script>
+    gsap.registerPlugin(SplitText, ScrollTrigger);
 
+    const split = new SplitText(".text-contents .text", {
+        type: "chars",
+    });
+
+    const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#about",
+                start: "30% 50%", // ScrollTrigger'ın tetiklendiği noktadan 100px aşağıda ve 80% sağda başla
+                end: "50% 50%",
+                scrub: 1,
+                // markers: true,
+            }
+        })
+        .set(split.chars, {
+            color: "#111",
+            stagger: 10,
+        }, 0.1);
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var swiperTextLine = new Swiper(".swiperTextLine", {
+            modules: [A, P, N, Px, C],
+            slidesPerView: 1,
+            speed: 1000,
+            parallax: true,
+            loop: false,
+            centeredSlides: true,
+            lazy: true,
+
+
+
+            pagination: {
+                el: ".about-pagination",
+                speed: 1000,
+                clickable: true,
+                dynamicBullets: true,
+            },
+            navigation: {
+                nextEl: ".swiperTextLine-next",
+                prevEl: ".swiperTextLine-prev"
+            },
+            autoplay: false,
+            autoplay: {
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+            }
+        });
+
+        function isElementInView(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        function checkSwiperVisibility() {
+            const swiperElement = document.querySelector('.swiperTextLine'); // Swiper elementinizi seçin
+            if (isElementInView(swiperElement)) {
+                // Eğer swiper görünüyorsa ve daha önce autoplay başlamadıysa
+                if (!swiperTextLine.autoplay.running) {
+                    swiperTextLine.autoplay.start();
+                }
+            } else {
+                // Swiper görünmüyorsa ve autoplay çalışıyorsa durdur
+                if (swiperTextLine.autoplay.running) {
+                    swiperTextLine.autoplay.stop();
+                }
+            }
+        }
+
+        // Scroll event listener ekleyin
+        window.addEventListener('scroll', checkSwiperVisibility);
+        // Sayfa yüklendiğinde de kontrol edin
+        window.addEventListener('load', checkSwiperVisibility);
+
+        var swiperImageLine = new Swiper(".swiperImageLine", {
+            modules: [A, P, N, Px, C],
+            slidesPerView: 1,
+            speed: 1000,
+            parallax: true,
+            loop: false,
+            centeredSlides: true,
+            lazy: true,
+
+        });
+        swiperTextLine.controller.control = swiperImageLine;
+        swiperImageLine.controller.control = swiperTextLine;
+        let stepIconItem = document.querySelectorAll('.step-icon-item');
+        var strokeSvgs = document.querySelectorAll('.strokeSvg');
+        stepIconItem[0].classList.add('is-active');
+
+        swiperTextLine.on('slideChange', function() {
+            stepIconItem.forEach((item) => {
+                item.classList.remove('is-active');
+            });
+            stepIconItem[swiperTextLine.realIndex % stepIconItem.length].classList.add('is-active');
+
+            // SVG path renklerini güncelle
+            var svgPaths = document.querySelectorAll('.strokeSvg'); // Burada düzeltilen kısım
+            svgPaths.forEach(function(path) {
+                path.setAttribute('stroke', 'black');
+            });
+            var activeIndex = swiperTextLine.realIndex % stepIconItem.length;
+            var pathIndex = activeIndex * 2; // Her adımda iki path olduğu varsayılıyor
+            if (svgPaths[pathIndex]) {
+                svgPaths[pathIndex].setAttribute('stroke', '#8F1838');
+            }
+            if (svgPaths[pathIndex]) {
+                svgPaths[pathIndex - 1].setAttribute('stroke', '#8F1838');
+            }
+        });
+
+        stepIconItem.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                swiperTextLine.slideTo(index);
+            });
+        });
+    });
+</script>
+
+
+
+<script>
+    var newCarousels = {
+        modules: [A, P, N, Px, EC, C, T],
+
+        speed: 1000,
+        parallax: true,
+
+        effect: 'creative',
+
+        creativeEffect: {
+            prev: {
+                scale: 0.9,
+                opacity: 0.5,
+            },
+            next: {
+                scale: 0.9,
+                opacity: 0.5,
+            },
+        },
+        autoplay: {
+            delay: 6000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        },
+        breakpoints: {
+            1024: {
+                creativeEffect: {
+                    prev: {
+                        scale: 1.1,
+                        opacity: 0.5,
+                    },
+                    next: {
+                        scale: 1.1,
+                        opacity: 0.5,
+                    },
+                },
+            },
+
+
+        },
+
+
+        pagination: {
+            el: ".lasting-paginations",
+            clickable: true,
+        },
+        navigation: {
+            prevEl: '.newCarousel-prev',
+            nextEl: '.newCarousel-next',
+        },
+
+    };
+
+    var newCarousel = new Swiper('.indexMaskCarousel', newCarousels);
+
+
+
+
+
+
+    var indexTextCarousel = new Swiper(".indexTextCarousel", {
+        modules: [A, P, N, Px, EC, C, T],
+        slidesPerView: 1,
+        speed: 1000,
+        Parallax: true,
+
+        pagination: {
+            el: ".lasting-pagination",
+            clickable: true,
+        },
+        navigation: {
+            prevEl: '.indexTextCarousel-prev',
+            nextEl: '.indexTextCarousel-next',
+        },
+    });
+
+    newCarousel.controller.control = indexTextCarousel;
+    indexTextCarousel.controller.control = newCarousel;
+</script>
+
+<script>
+    var swiperNewCarousel = new Swiper(".swiperNewCarousel", {
+        modules: [A, P, N, Px, EC, C],
+        slidesPerView: 1,
+
+        speed: 1200,
+        parallax: true,
+        loop: false,
+        autoplay: false,
+        autoplay: {
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        },
+        navigation: {
+            prevEl: '.swiperNewCarousel-prev',
+            nextEl: '.swiperNewCarousel-next',
+        },
+        breakpoints: {
+            769: {
+                slidesPerView: 1,
+            },
+
+            1440: {
+                slidesPerView: 1.2,
+            },
+            1520: {
+                slidesPerView: 1.3,
+            },
+            1680: {
+                slidesPerView: 1.5,
+            }
+        },
+        lazy: true,
+        pagination: {
+            el: ".about-pagination",
+            speed: 1000,
+            clickable: true,
+            dynamicBullets: true,
+        },
+    });
+
+    function isElementInView(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    function checkSwiperVisibility() {
+        const swiperElement = document.querySelector('.swiperNewCarousel'); // Swiper elementinizi seçin
+        if (isElementInView(swiperElement)) {
+            // Eğer swiper görünüyorsa ve daha önce autoplay başlamadıysa
+            if (!swiperNewCarousel.autoplay.running) {
+                swiperNewCarousel.autoplay.start();
+            }
+        } else {
+            // Swiper görünmüyorsa ve autoplay çalışıyorsa durdur
+            if (swiperNewCarousel.autoplay.running) {
+                swiperNewCarousel.autoplay.stop();
+            }
+        }
+    }
+
+    // Scroll event listener ekleyin
+    window.addEventListener('scroll', checkSwiperVisibility);
+    // Sayfa yüklendiğinde de kontrol edin
+    window.addEventListener('load', checkSwiperVisibility);
+
+
+
+    let newSlider = new Swiper(".other-products-slider", {
+        modules: [A, P, N, Px],
+        slidesPerView: 1,
+        speed: 1000,
+        spaceBetween: 0,
+        loop: true,
+        resistance: true,
+        resistanceRatio: 0,
+        centeredSlides: true,
+        watchSlidesProgress: true,
+        autoplay: false,
+        autoplay: {
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        },
+        navigation: {
+            nextEl: ".other-product-next",
+            prevEl: ".other-product-prev",
+
+        },
+        breakpoints: {
+            600: {
+                slidesPerView: 1.2,
+            },
+            820: {
+                slidesPerView: 2,
+                centeredSlides: false,
+            },
+
+            1380: {
+                slidesPerView: 3,
+            },
+
+            1560: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+            },
+            1680: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+            },
+        },
+    })
+
+
+    function isElementInView(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    function checkSwiperVisibility() {
+        const swiperElement = document.querySelector('.other-products-slider'); // Swiper elementinizi seçin
+        if (isElementInView(swiperElement)) {
+            // Eğer swiper görünüyorsa ve daha önce autoplay başlamadıysa
+            if (!newSlider.autoplay.running) {
+                newSlider.autoplay.start();
+            }
+        } else {
+            // Swiper görünmüyorsa ve autoplay çalışıyorsa durdur
+            if (newSlider.autoplay.running) {
+                newSlider.autoplay.stop();
+            }
+        }
+    }
+
+    // Scroll event listener ekleyin
+    window.addEventListener('scroll', checkSwiperVisibility);
+    // Sayfa yüklendiğinde de kontrol edin
+    window.addEventListener('load', checkSwiperVisibility);
+
+
+    let projectMobileSliderParams = {
+        modules: [A, N, Px, ],
+        slidesPerView: 1,
+        speed: 1000,
+        spaceBetween: 24,
+        loop: false,
+        resistance: true,
+        resistanceRatio: 0,
+        watchSlidesProgress: true,
+        navigation: {
+            nextEl: ".project-mobile-next",
+            prevEl: ".project-mobile-prev",
+            disabledClass: "project-mobile-disabled"
+        },
+        on: {
+            slideChange: function() {
+                let nextEl = document.querySelector(".project-mobile-next"),
+                    prevEl = document.querySelector(".project-mobile-prev"),
+                    slides = document.querySelectorAll(".project-mobile-slider .swiper-slide");
+
+                nextEl.classList.remove("project-mobile-disabled")
+                prevEl.classList.remove("project-mobile-disabled")
+                slides.forEach(slide => {
+                    if (slides.length - 1 === this.activeIndex) {
+                        nextEl.classList.add("project-mobile-disabled")
+                    }
+                })
+            },
+        }
+    }
+    let projectMobileSlider = new Swiper(".project-mobile-slider", {
+        modules: [A, N, Px, ],
+        slidesPerView: 1,
+        speed: 1000,
+        spaceBetween: 24,
+        loop: false,
+        resistance: true,
+        resistanceRatio: 0,
+        watchSlidesProgress: true,
+        navigation: {
+            nextEl: ".project-mobile-next",
+            prevEl: ".project-mobile-prev",
+            disabledClass: "project-mobile-disabled"
+        },
+        on: {
+            slideChange: function() {},
+        }
+    })
+
+
+
+    var swiperCard = new Swiper(".mobileCards", {
+        modules: [A, P, N, Px, EC, C, ECards],
+        effect: "cards",
+        grabCursor: true,
+        initialSlide: 2, // Kartların başlangıçta ters sırayla olması için ilk görünen kartın indeksi
+        slidesPerView: "auto",
+        loop: false, // Slider sonsuz döngü içinde olsun
+        autoplay: false,
+        autoplay: {
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        },
+        pagination: {
+            el: ".lasting-pagination",
+            clickable: true,
+        },
+        cardsEffect: {
+            perSlideRotate: 10, // Rotation angle of second and subsequent slides
+            slideShadows: false, // Shadow presence of second and subsequent slides(true/false)
+
+        },
+    });
+
+    function isElementInView(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    function checkSwiperVisibility() {
+        const swiperElement = document.querySelector('.mobileCards'); // Swiper elementinizi seçin
+        if (isElementInView(swiperElement)) {
+            // Eğer swiper görünüyorsa ve daha önce autoplay başlamadıysa
+            if (!swiperCard.autoplay.running) {
+                swiperCard.autoplay.start();
+            }
+        } else {
+            // Swiper görünmüyorsa ve autoplay çalışıyorsa durdur
+            if (swiperCard.autoplay.running) {
+                swiperCard.autoplay.stop();
+            }
+        }
+    }
+
+    // Scroll event listener ekleyin
+    window.addEventListener('scroll', checkSwiperVisibility);
+    // Sayfa yüklendiğinde de kontrol edin
+    window.addEventListener('load', checkSwiperVisibility);
+</script>
 @endsection

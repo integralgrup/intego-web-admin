@@ -1,4 +1,10 @@
+<?php
+    $footerInfo = App\Models\FooterInfo::where('lang', app()->getLocale())->first();
+    $footerMenus = App\Models\Menu::where(['lang' => app()->getLocale(), 'menu_type' => 'footer', 'parent_menu_id' => '0'])
+    ->with('children')
+    ->orderBy('sort')->get();
 
+?>
 </div>
     </div>
 </penta-yazilim>
@@ -36,239 +42,37 @@
                 <div class="container max-w-[1440px] mx-auto">
                     <div class="wrapper flex flex-col justify-between gap-[150px] 2xl:gap-[130px] xl:gap-[100px] md:gap-[35px]">
                         <div class="grid grid-cols-5 md:grid-cols-2 sm:grid-cols-1  md:gap-0 pt-[100px] md:pt-[50px] sm:gap-x-[20px] sm:gap-y-[20px] sm:pt-[150px] xs:pt-[100px]">
+                            <?php foreach($footerMenus as $menuItem) : ?>
                             <div dir class="menu-content z-10 accordion-tab group rounded-full">
                                 <div class="flex justify-between items-center lg:justify-center sm:justify-between">
-                                    <div class="text-white lg:text-center sm:text-start text-[28px] 2xl:text-[24px] xl:text-[22px] lg:text-[20px] sm:text-[20px] xs:text-[16px] font-bold leading-[48px] xl:leading-[40px] lg:leading-[35px] md:leading-[30px] mb-[50px] sm:mb-0 relative before:absolute before:bottom-[-25px] sm:before:hidden sm:before:left-0 sm:before:bottom-[-15px] before:left-0 before:group-[&.rtl]/html:left-auto before:group-[&.rtl]/html:right-0 lg:before:left-0 md:before:left-1/2 before:w-[45px] before:h-[3px] before:rounded-full before:bg-secondary">Corporate</div>
+                                    <div class="text-white lg:text-center sm:text-start text-[28px] 2xl:text-[24px] xl:text-[22px] lg:text-[20px] sm:text-[20px] xs:text-[16px] font-bold leading-[48px] xl:leading-[40px] lg:leading-[35px] md:leading-[30px] mb-[50px] sm:mb-0 relative before:absolute before:bottom-[-25px] sm:before:hidden sm:before:left-0 sm:before:bottom-[-15px] before:left-0 before:group-[&.rtl]/html:left-auto before:group-[&.rtl]/html:right-0 lg:before:left-0 md:before:left-1/2 before:w-[45px] before:h-[3px] before:rounded-full before:bg-secondary">{{ $menuItem->title }}</div>
                                     <i class="icon icon-chevron-down text-white sm:flex hidden sm:items-center sm:justify-center group-[&.active]:rotate-180 duration-500"></i>
                                 </div>
                                 <ul class="sm:hidden accordion-tab-menu [&.active]:block sm:bg-secondary sm:rounded-[20px] sm:p-3">
+                                    <?php foreach($menuItem->children as $item) : ?>
                                     <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
                                         <span class="flex group/icon">
                                             <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Who are we?</a>
+                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="<?=env('HTTP_DOMAIN')?>/{{$menuItem->seo_url}}/{{$item->seo_url}}">{{$item->title}}</a>
                                         </span>
                                     </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">What Do We Do?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">How do we do?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Our Vision</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Our News</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Contact Us</a>
-                                        </span>
-                                    </li>
+                                    <?php endforeach; ?>
                                 </ul>
                             </div>
-                            <div dir class="menu-content z-10 accordion-tab group">
-                                <div class="flex items-center justify-between lg:justify-center sm:justify-between">
-                                    <div class="text-white lg:text-center sm:text-start text-[28px] 2xl:text-[24px] xl:text-[22px] lg:text-[20px] md:text-[24px] sm:text-[20px] xs:text-[16px] font-bold leading-[48px] xl:leading-[40px] lg:leading-[35px] md:leading-[30px] mb-[50px] relative before:absolute before:bottom-[-25px] sm:before:hidden sm:before:left-0 sm:before:bottom-[-15px] sm:mb-0 before:left-0 before:group-[&.rtl]/html:left-auto before:group-[&.rtl]/html:right-0 lg:before:left-0 md:before:left-1/2 before:w-[45px] before:h-[3px] before:rounded-full before:bg-secondary">Products</div>
-                                    <i class="icon icon-chevron-down text-white sm:flex hidden sm:items-center sm:justify-center group-[&.active]:rotate-180 duration-500"></i>
-                                </div>
-                                <ul class="sm:hidden accordion-tab-menu [&.active]:block sm:bg-secondary sm:rounded-[20px] sm:p-3">
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Who are we?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">What Do We Do?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">How do we do?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Our Vision</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Our News</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Contact Us</a>
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div dir class="menu-content z-10 accordion-tab group">
-                                <div class="flex items-center justify-between lg:justify-center sm:justify-between">
-                                    <div class="text-white lg:text-center sm:text-start text-[28px] 2xl:text-[24px] xl:text-[22px] lg:text-[20px] md:text-[24px] sm:text-[20px] xs:text-[16px] font-bold leading-[48px] xl:leading-[40px] lg:leading-[35px] md:leading-[30px] mb-[50px] relative before:absolute before:bottom-[-25px] sm:before:hidden sm:before:left-0 sm:before:bottom-[-15px] sm:mb-0 before:left-0 before:group-[&.rtl]/html:left-auto before:group-[&.rtl]/html:right-0 lg:before:left-0 md:before:left-1/2 before:w-[45px] before:h-[3px] before:rounded-full before:bg-secondary">Products</div>
-                                    <i class="icon icon-chevron-down text-white sm:flex hidden sm:items-center sm:justify-center group-[&.active]:rotate-180 duration-500"></i>
-                                </div>
-                                <ul class="sm:hidden accordion-tab-menu [&.active]:block sm:bg-secondary sm:rounded-[20px] sm:p-3">
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Who are we?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">What Do We Do?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">How do we do?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Our Vision</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Our News</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Contact Us</a>
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div dir class="menu-content z-10 accordion-tab group">
-                                <div class="flex items-center justify-between lg:justify-center sm:justify-between">
-                                    <div class="text-white lg:text-center sm:text-start text-[28px] 2xl:text-[24px] xl:text-[22px] lg:text-[20px] md:text-[24px] sm:text-[20px] xs:text-[16px] font-bold leading-[48px] xl:leading-[40px] lg:leading-[35px] md:leading-[30px] mb-[50px] relative before:absolute before:bottom-[-25px] sm:before:hidden sm:before:left-0 sm:before:bottom-[-15px] sm:mb-0 before:left-0 before:group-[&.rtl]/html:left-auto before:group-[&.rtl]/html:right-0 lg:before:left-0 md:before:left-1/2 before:w-[45px] before:h-[3px] before:rounded-full before:bg-secondary">Urban Furniture</div>
-                                    <i class="icon icon-chevron-down text-white sm:flex hidden sm:items-center sm:justify-center group-[&.active]:rotate-180 duration-500"></i>
-                                </div>
-                                <ul class="sm:hidden accordion-tab-menu [&.active]:block sm:bg-secondary sm:rounded-[20px] sm:p-3">
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Who are we?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">What Do We Do?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">How do we do?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Our Vision</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Our News</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Contact Us</a>
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div dir class="menu-content z-10 accordion-tab group">
-                                <div class="flex items-center justify-between lg:justify-center sm:justify-between">
-                                    <div class="text-white lg:text-center sm:text-start text-[28px] 2xl:text-[24px] xl:text-[22px] lg:text-[20px] md:text-[24px] sm:text-[20px] xs:text-[16px] font-bold leading-[48px] xl:leading-[40px] lg:leading-[35px] md:leading-[30px] mb-[50px] relative before:absolute before:bottom-[-25px] sm:before:hidden sm:before:left-0 sm:before:bottom-[-15px] sm:mb-0 before:left-0 before:group-[&.rtl]/html:left-auto before:group-[&.rtl]/html:right-0 lg:before:left-0 md:before:left-1/2 before:w-[45px] before:h-[3px] before:rounded-full before:bg-secondary">Playground Areas</div>
-                                    <i class="icon icon-chevron-down text-white sm:flex hidden sm:items-center sm:justify-center group-[&.active]:rotate-180 duration-500"></i>
-                                </div>
-                                <ul class="sm:hidden accordion-tab-menu [&.active]:block sm:bg-secondary sm:rounded-[20px] sm:p-3">
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Who are we?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">What Do We Do?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">How do we do?</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Our Vision</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Our News</a>
-                                        </span>
-                                    </li>
-                                    <li class="pb-[10px] xl:pb-[5px] sm:pb-0 flex items-center justify-start lg:justify-center sm:justify-start gap-[10px] min-sm:-translate-x-6 duration-500">
-                                        <span class="flex group/icon">
-                                            <i class="icon icon-arrow-right-2 group-hover/icon:-rotate-45 hover:translate-x-2 flex items-center justify-center text-secondary opacity-0 group-hover/icon:opacity-100 sm:hidden duration-500"></i>
-                                            <a class="text-[16px] lg:text-[15px] xs:text-[15px] text-white/80 sm:text-white sm:[text-shadow:1px_0_0_currentColor] group-hover/icon:text-white font-medium group-hover/icon:[text-shadow:1px_0_0_currentColor] leading-[48px] hover:translate-x-4 duration-500" href="">Contact Us</a>
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
+                            <?php endforeach; ?>
                         </div>
                         <div class="flex justify-between sm:flex-col sm:items-center sm:justify-center sm:gap-[20px] pb-[40px] md:pb-[120px] sm:pb-[40px]">
                             <ul class="flex gap-[60px] xl:flex-col 2xl:gap-[20px] 2xl:pr-[30px] z-10">
                                 <li>
-                                    <a href="+902163654250" class="flex items-center gap-[24px] group/link">
+                                    <a href="{{$footerInfo->phone}}" class="flex items-center gap-[24px] group/link">
                                         <i class="icon icon-headphone text-[20px] h-[20px] text-white/40 block leading-none duration-350 group-hover/link:text-secondary"></i>
-                                        <span class="text text-[20px] sm:text-[16px] duration-350 text-white group-hover/link:min-lg:text-main-500 group-hover/link:min-lg:translate-x-1 break-all">+90 212 678 13 13</span>
+                                        <span class="text text-[20px] sm:text-[16px] duration-350 text-white group-hover/link:min-lg:text-main-500 group-hover/link:min-lg:translate-x-1 break-all">{{$footerInfo->phone}}</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="info@kardev.com.tr" class="flex items-center gap-[24px] group/link">
                                         <i class="icon icon-group text-[20px] h-[20px] text-white/40 block leading-none duration-350 group-hover/link:text-secondary"></i>
-                                        <span class="text text-[20px] sm:text-[16px] duration-350 text-white group-hover/link:min-lg:text-main-500 group-hover/link:min-lg:translate-x-1 break-all">info@intego.com</span>
+                                        <span class="text text-[20px] sm:text-[16px] duration-350 text-white group-hover/link:min-lg:text-main-500 group-hover/link:min-lg:translate-x-1 break-all">{{$footerInfo->email}}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -279,22 +83,22 @@
                             </div>
                             <ul class="flex items-center gap-[40px] lg:gap-[20px] md:gap-[5px]">
                                 <li class="group/li relative z-20">
-                                    <a target="_blank" href="https://www.facebook.com/" class="flex group cursor-pointer border-[2px] border-solid border-transparent hover:border-secondary duration-500 rounded-full">
+                                    <a target="_blank" href="{{$footerInfo->facebook_url}}" class="flex group cursor-pointer border-[2px] border-solid border-transparent hover:border-secondary duration-500 rounded-full">
                                         <i class="icon icon-facebook text-[16px] h-[16px] text-white leading-none flex items-center px-2 py-4 justify-center"></i>
                                     </a>
                                 </li>
                                 <li class="group/li relative z-20">
-                                    <a target="_blank" href="https://www.linkedin.com/" class="flex group cursor-pointer border-[2px] border-solid border-transparent hover:border-secondary duration-500 rounded-full">
+                                    <a target="_blank" href="{{$footerInfo->linkedin_url}}" class="flex group cursor-pointer border-[2px] border-solid border-transparent hover:border-secondary duration-500 rounded-full">
                                         <i class="icon icon-linkedin text-[16px] h-[16px] text-white leading-none flex items-center px-2 py-4 justify-center"></i>
                                     </a>
                                 </li>
                                 <li class="group/li relative z-20">
-                                    <a target="_blank" href="https://www.youtube.com/" class="flex group cursor-pointer border-[2px] border-solid border-transparent hover:border-secondary duration-500 rounded-full">
+                                    <a target="_blank" href="{{$footerInfo->youtube_url}}" class="flex group cursor-pointer border-[2px] border-solid border-transparent hover:border-secondary duration-500 rounded-full">
                                         <i class="icon icon-youtube text-[16px] h-[16px] text-white leading-none flex items-center px-2 py-4 justify-center"></i>
                                     </a>
                                 </li>
                                 <li class="group/li relative z-20">
-                                    <a target="_blank" href="https://www.instagram.com/" class="flex group cursor-pointer border-[2px] border-solid border-transparent hover:border-secondary duration-500 rounded-full">
+                                    <a target="_blank" href="{{$footerInfo->instagram_url}}" class="flex group cursor-pointer border-[2px] border-solid border-transparent hover:border-secondary duration-500 rounded-full">
                                         <i class="icon icon-instagram text-[16px] h-[16px] text-white leading-none flex items-center px-2 py-4 justify-center"></i>
                                     </a>
                                 </li>
@@ -308,12 +112,12 @@
             <div class=" px-[100px] sm:px-[10px]  bg-[#F9B100] py-[20px] rounded-[80px] sm:rounded-[30px]">
                 <div class="grid grid-cols-3 sm:grid-cols-1 gap-[20px] md:gap-0 sm:gap-[30px] items-center">
                     <p class="text-[16px] leading-normal tracking-[0.16px] text-white  font-semibold sm:text-center">
-                        Intego is a Brand of <a href="#" target="_blank" class="text-primary-main hover:text-[#1679BE] duration-500 relative after:absolute after:bottom-0 after:left-0 after:bg-primary-main after:w-0 after:h-[1px] after:transition-all after:duration-300 hover:after:w-full">Integral Group</a>
+                        {{$footerInfo->alt}} 
                     </p>
                     <p class="text-[16px] leading-normal tracking-[0.16px] text-white font-semibold text-center">
-                        © 2024 <a href="index.php" target="_blank" class="text-white hover:text-[#1679BE] duration-500 relative after:absolute after:bottom-0 after:left-0 after:bg-primary-main after:w-0 after:h-[1px] after:transition-all after:duration-300 hover:after:w-full">intego.com</a> | All rights reserved
+                        © {{date('Y')}}  | {{$footerInfo->footer_text}}
                     </p>
-                    <div class="flex min-sm:justify-end sm:justify-center hover:scale-y-110 cursor-pointer duration-500"><img src="../assets/image/integral-group.png" alt="Integral Group" width="107" height="22" class="w-[107px] h-auto text-right"></div>
+                    <div class="flex min-sm:justify-end sm:justify-center hover:scale-y-110 cursor-pointer duration-500"><img src="{{asset(getFolder(['uploads_folder', 'images_folder'], $footerInfo->lang). '/' . $footerInfo->footer_logo)}}" alt="Integral Group" width="107" height="22" class="w-[107px] h-auto text-right"></div>
                 </div>
             </div>
         </div>
@@ -540,561 +344,201 @@
         </div>
     </div>
 </section>
-        <!-- BG OVERLAY -->
-        <div class="bg-overlay-general fixed left-0 top-0 z-[90] opacity-0 invisible duration-500 [&.active]:opacity-100 [&.active]:visible [&.black]:bg-black/30 w-full h-full group"></div>
-        <!-- COOKIE -->
-        <div class="cookie-box fixed top-auto bottom-[20px] right-[20px] left-[20px] mr-0 ml-auto w-fit max-w-[550px] md:max-w-full z-[200] duration-450 xs:w-full xs:left-0 xs:bottom-0 xs:right-0 bg-cookie p-[30px] rounded-[20px] xs:rounded-none translate-y-[150%] [&.accepted]:opacity-0 [&.accepted]:invisible [&.accepted]:translate-y-[250%] sm:sm:max-h-[calc(100dvh-40px)] sm:scrollbar sm:scrollbar-w-[5px] sm:scrollbar-track-rounded-[5px] sm:scrollbar-thumb-rounded-[5px] sm:scrollbar-thumb-primary-500 sm:scrollbar-track-primary-500/10 sm:overflow-x-hidden sm:overflow-y-auto">
-            <div class="close close-cookie absolute right-[20px] top-[20px] cursor-pointer group/close">
-                <div class="icon icon-cross icon-close group-hover/close:text-primary-500 group-hover/close:rotate-90 text-white text-[14px] h-[14px] block leading-none duration-350"></div>
-            </div>
-            <div class="text-field text-white">
-                <div class="title font-medium text-[18px] mb-[15px]">Çerez Ayarları</div>
-                <div class="expo text-[14px] sm:text-[12px] text-white/50">Bu web sitesinde, cihaz bilgilerini ve kişisel verileri işlemek için çerezleri ve benzer işlevleri kullanıyoruz. İşleme, içeriğin, harici hizmetlerin ve üçüncü şahısların unsurlarının, istatistiksel analiz/ölçümün, kişiselleştirilmiş reklamcılığın ve sosyal medyanın entegrasyonunun entegrasyonuna hizmet eder. İşleve bağlı olarak, veriler üçüncü taraflara aktarılır ve onlar tarafından işlenir. Bu onay isteğe bağlıdır, web sitemizin kullanımı için gerekli değildir ve sol alttaki simge kullanılarak herhangi bir zamanda iptal edilebilir.</div>
-            </div>
-            <div class="split my-[20px] sm:my-[10px] bg-white/5 w-full h-[1px]"></div>
-            <div class="action-field flex items-center justify-between gap-[20px] sm:flex-col">
-                <button class="accept-cookie close-cookie button group/button w-full flex justify-center items-center gap-[20px] bg-secondary px-[20px] hover:bg-[#1679BE] h-[45px] md:h-[50px] duration-350 rounded-[20px]">
-                    <div class="text text-[13px] text-white font-medium relative z-2 whitespace-nowrap duration-350">Çerezleri Kabul Et</div>
-                </button>
-                <button class="button group/button w-full flex justify-center items-center gap-[20px] bg-transparent px-[20px] h-[45px] md:h-[50px] duration-350 border border-solid border-secondary hover:border-[#1679BE] rounded-[20px]">
-                    <div class="text text-[13px] text-white/50 duration-350 font-medium relative z-2 whitespace-nowrap group-hover/button:text-white">Reddet</div>
-                </button>
-            </div>
-            <div class="link-field mt-[30px]">
-                <a href="page.php" class="text-white/50 duration-350 hover:text-white underline text-[13px] font-medium">Kişisel Verilerin Korunması</a>
-                <span class="mx-[10px] text-black/50">|</span>
-                <a href="page.php" class="text-white/50 duration-350 hover:text-white underline text-[13px] font-medium">Gizlilik</a>
-            </div>
-        </div>
+<!-- BG OVERLAY -->
+<div class="bg-overlay-general fixed left-0 top-0 z-[90] opacity-0 invisible duration-500 [&.active]:opacity-100 [&.active]:visible [&.black]:bg-black/30 w-full h-full group"></div>
+<!-- COOKIE -->
+<div class="cookie-box fixed top-auto bottom-[20px] right-[20px] left-[20px] mr-0 ml-auto w-fit max-w-[550px] md:max-w-full z-[200] duration-450 xs:w-full xs:left-0 xs:bottom-0 xs:right-0 bg-cookie p-[30px] rounded-[20px] xs:rounded-none translate-y-[150%] [&.accepted]:opacity-0 [&.accepted]:invisible [&.accepted]:translate-y-[250%] sm:sm:max-h-[calc(100dvh-40px)] sm:scrollbar sm:scrollbar-w-[5px] sm:scrollbar-track-rounded-[5px] sm:scrollbar-thumb-rounded-[5px] sm:scrollbar-thumb-primary-500 sm:scrollbar-track-primary-500/10 sm:overflow-x-hidden sm:overflow-y-auto">
+    <div class="close close-cookie absolute right-[20px] top-[20px] cursor-pointer group/close">
+        <div class="icon icon-cross icon-close group-hover/close:text-primary-500 group-hover/close:rotate-90 text-white text-[14px] h-[14px] block leading-none duration-350"></div>
+    </div>
+    <div class="text-field text-white">
+        <div class="title font-medium text-[18px] mb-[15px]">Çerez Ayarları</div>
+        <div class="expo text-[14px] sm:text-[12px] text-white/50">Bu web sitesinde, cihaz bilgilerini ve kişisel verileri işlemek için çerezleri ve benzer işlevleri kullanıyoruz. İşleme, içeriğin, harici hizmetlerin ve üçüncü şahısların unsurlarının, istatistiksel analiz/ölçümün, kişiselleştirilmiş reklamcılığın ve sosyal medyanın entegrasyonunun entegrasyonuna hizmet eder. İşleve bağlı olarak, veriler üçüncü taraflara aktarılır ve onlar tarafından işlenir. Bu onay isteğe bağlıdır, web sitemizin kullanımı için gerekli değildir ve sol alttaki simge kullanılarak herhangi bir zamanda iptal edilebilir.</div>
+    </div>
+    <div class="split my-[20px] sm:my-[10px] bg-white/5 w-full h-[1px]"></div>
+    <div class="action-field flex items-center justify-between gap-[20px] sm:flex-col">
+        <button class="accept-cookie close-cookie button group/button w-full flex justify-center items-center gap-[20px] bg-secondary px-[20px] hover:bg-[#1679BE] h-[45px] md:h-[50px] duration-350 rounded-[20px]">
+            <div class="text text-[13px] text-white font-medium relative z-2 whitespace-nowrap duration-350">Çerezleri Kabul Et</div>
+        </button>
+        <button class="button group/button w-full flex justify-center items-center gap-[20px] bg-transparent px-[20px] h-[45px] md:h-[50px] duration-350 border border-solid border-secondary hover:border-[#1679BE] rounded-[20px]">
+            <div class="text text-[13px] text-white/50 duration-350 font-medium relative z-2 whitespace-nowrap group-hover/button:text-white">Reddet</div>
+        </button>
+    </div>
+    <div class="link-field mt-[30px]">
+        <a href="page.php" class="text-white/50 duration-350 hover:text-white underline text-[13px] font-medium">Kişisel Verilerin Korunması</a>
+        <span class="mx-[10px] text-black/50">|</span>
+        <a href="page.php" class="text-white/50 duration-350 hover:text-white underline text-[13px] font-medium">Gizlilik</a>
 
-        
+    </div>
 
-        <!-- Önbellek tutmasın diye ekledim '?id<?= rand(); ?>' yazısını silersin -->
-        <script src="../assets/js/script.js?id<?= rand(); ?>"></script>
-        <script src="https://unpkg.com/scrollreveal"></script>
 
-        <script>
-            // ScrollReveal  
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-            if (!isMobile) {
-                ScrollReveal().reveal('.hand', {
-                    interval: 75,
-                    distance: '30px',
-                    duration: 1000,
-                    viewFactor: 0.50,
-                    origin: 'right',
-                    mobile: true,
-                    beforeReveal: (el) => {
-                        el.classList.add('animate-swipe'); // Özel CSS animasyon sınıfını ekleyin
-                    },
-                    useDelay: 'onload', // Bu satırı ekleyin
-                });
 
-                ScrollReveal().reveal('.hand-down', {
-                    interval: 75,
-                    distance: '30px',
-                    duration: 1000,
-                    viewFactor: 0.50,
-                    origin: 'left',
-                    mobile: true,
-                    beforeReveal: (el) => {
-                        el.classList.add('animate-swipeDown'); // Özel CSS animasyon sınıfını ekleyin
-                    },
-                    useDelay: 'onload', // Bu satırı ekleyin
-                });
+</div>
 
-                ScrollReveal().reveal('.sens', {
-                    interval: 75,
-                    distance: '30px',
-                    duration: 1000,
-                    viewFactor: 0.20,
-                    origin: 'bottom',
-                    mobile: true,
-                    beforeReveal: (el) => {
-                        el.classList.add('active'); // Özel CSS animasyon sınıfını ekleyin
-                    },
-                    useDelay: 'onload', // Bu satırı ekleyin
-                });
-                ScrollReveal().reveal('.sens-down', {
-                    interval: 75,
-                    distance: '30px',
-                    duration: 1000,
-                    viewFactor: 0.50,
-                    origin: 'top',
-                    mobile: true,
-                    beforeReveal: (el) => {
-                        el.classList.add('active'); // Özel CSS animasyon sınıfını ekleyin
-                    },
-                    useDelay: 'onload', // Bu satırı ekleyin
-                });
-            }
-        </script>
+<!-- Önbellek tutmasın diye ekledim '?id<?= rand(); ?>' yazısını silersin -->
+<script src="../assets/js/script.js?id<?= rand(); ?>"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
 
 <script>
-    gsap.registerPlugin(SplitText, ScrollTrigger);
+    // ScrollReveal  
 
-    const split = new SplitText(".text-contents .text", {
-        type: "chars",
-    });
 
-    const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#about",
-                start: "30% 50%", // ScrollTrigger'ın tetiklendiği noktadan 100px aşağıda ve 80% sağda başla
-                end: "50% 50%",
-                scrub: 1,
-                // markers: true,
-            }
-        })
-        .set(split.chars, {
-            color: "#111",
-            stagger: 10,
-        }, 0.1);
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (!isMobile) {
+        ScrollReveal().reveal('.hand', {
+            interval: 75,
+            distance: '30px',
+            duration: 1000,
+            viewFactor: 0.50,
+            origin: 'right',
+            mobile: true,
+            beforeReveal: (el) => {
+                el.classList.add('animate-swipe'); // Özel CSS animasyon sınıfını ekleyin
+            },
+            useDelay: 'onload', // Bu satırı ekleyin
+
+
+        });
+
+        ScrollReveal().reveal('.hand-down', {
+            interval: 75,
+            distance: '30px',
+            duration: 1000,
+            viewFactor: 0.50,
+            origin: 'left',
+            mobile: true,
+            beforeReveal: (el) => {
+                el.classList.add('animate-swipeDown'); // Özel CSS animasyon sınıfını ekleyin
+            },
+            useDelay: 'onload', // Bu satırı ekleyin
+
+
+        });
+
+        ScrollReveal().reveal('.sens', {
+            interval: 75,
+            distance: '30px',
+            duration: 1000,
+            viewFactor: 0.20,
+            origin: 'bottom',
+            mobile: true,
+            beforeReveal: (el) => {
+                el.classList.add('active'); // Özel CSS animasyon sınıfını ekleyin
+            },
+            useDelay: 'onload', // Bu satırı ekleyin
+        });
+        ScrollReveal().reveal('.sens-down', {
+            interval: 75,
+            distance: '30px',
+            duration: 1000,
+            viewFactor: 0.50,
+            origin: 'top',
+            mobile: true,
+            beforeReveal: (el) => {
+                el.classList.add('active'); // Özel CSS animasyon sınıfını ekleyin
+            },
+            useDelay: 'onload', // Bu satırı ekleyin
+        });
+    }
+
+
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var swiperTextLine = new Swiper(".swiperTextLine", {
-            modules: [A, P, N, Px, C],
-            slidesPerView: 1,
-            speed: 1000,
-            parallax: true,
-            loop: false,
-            centeredSlides: true,
-            lazy: true,
+    const accordionTabs = document.querySelectorAll(".accordion-tab");
+    const accordionTabMenus = document.querySelectorAll(".accordion-tab-menu");
+
+    accordionTabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => {
+            const isActive = accordionTabs[index].classList.contains("active");
 
 
+            accordionTabs.forEach(tab => tab.classList.remove("active"));
+            accordionTabMenus.forEach(menu => menu.classList.remove("active"));
 
-            pagination: {
-                el: ".about-pagination",
-                speed: 1000,
-                clickable: true,
-                dynamicBullets: true,
-            },
-            navigation: {
-                nextEl: ".swiperTextLine-next",
-                prevEl: ".swiperTextLine-prev"
-            },
-            autoplay: false,
-            autoplay: {
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
+            if (!isActive) {
+
+                accordionTabMenus[index].classList.add("active");
+                accordionTabs[index].classList.add("active");
             }
-        });
 
-        function isElementInView(element) {
-            const rect = element.getBoundingClientRect();
-            return (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
-        }
-
-        function checkSwiperVisibility() {
-            const swiperElement = document.querySelector('.swiperTextLine'); // Swiper elementinizi seçin
-            if (isElementInView(swiperElement)) {
-                // Eğer swiper görünüyorsa ve daha önce autoplay başlamadıysa
-                if (!swiperTextLine.autoplay.running) {
-                    swiperTextLine.autoplay.start();
-                }
-            } else {
-                // Swiper görünmüyorsa ve autoplay çalışıyorsa durdur
-                if (swiperTextLine.autoplay.running) {
-                    swiperTextLine.autoplay.stop();
-                }
-            }
-        }
-
-        // Scroll event listener ekleyin
-        window.addEventListener('scroll', checkSwiperVisibility);
-        // Sayfa yüklendiğinde de kontrol edin
-        window.addEventListener('load', checkSwiperVisibility);
-
-        var swiperImageLine = new Swiper(".swiperImageLine", {
-            modules: [A, P, N, Px, C],
-            slidesPerView: 1,
-            speed: 1000,
-            parallax: true,
-            loop: false,
-            centeredSlides: true,
-            lazy: true,
-
-        });
-        swiperTextLine.controller.control = swiperImageLine;
-        swiperImageLine.controller.control = swiperTextLine;
-        let stepIconItem = document.querySelectorAll('.step-icon-item');
-        var strokeSvgs = document.querySelectorAll('.strokeSvg');
-        stepIconItem[0].classList.add('is-active');
-
-        swiperTextLine.on('slideChange', function() {
-            stepIconItem.forEach((item) => {
-                item.classList.remove('is-active');
-            });
-            stepIconItem[swiperTextLine.realIndex % stepIconItem.length].classList.add('is-active');
-
-            // SVG path renklerini güncelle
-            var svgPaths = document.querySelectorAll('.strokeSvg'); // Burada düzeltilen kısım
-            svgPaths.forEach(function(path) {
-                path.setAttribute('stroke', 'black');
-            });
-            var activeIndex = swiperTextLine.realIndex % stepIconItem.length;
-            var pathIndex = activeIndex * 2; // Her adımda iki path olduğu varsayılıyor
-            if (svgPaths[pathIndex]) {
-                svgPaths[pathIndex].setAttribute('stroke', '#8F1838');
-            }
-            if (svgPaths[pathIndex]) {
-                svgPaths[pathIndex - 1].setAttribute('stroke', '#8F1838');
-            }
-        });
-
-        stepIconItem.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                swiperTextLine.slideTo(index);
-            });
         });
     });
 </script>
 
-
-
 <script>
-    var newCarousels = {
-        modules: [A, P, N, Px, EC, C, T],
+    let togglerClassName = 'isDrop';
+    // let tabs = document.querySelectorAll('[data-tabs]');
+    let close = document.querySelectorAll('[data-tabs-close]');
+    let subMenu = document.querySelectorAll('[data-tabs-subsMenu]');
 
-        speed: 1000,
-        parallax: true,
+    // tabs.forEach((t, i) => {
+    //     t.addEventListener('click', () => {
+    //         t.parentElement.classList.toggle(togglerClassName);
 
-        effect: 'creative',
+    //         close.forEach((item) => {
+    //             item.classList.remove(togglerClassName);
+    //         });
+    //     })
+    // });
 
-        creativeEffect: {
-            prev: {
-                scale: 0.9,
-                opacity: 0.5,
-            },
-            next: {
-                scale: 0.9,
-                opacity: 0.5,
-            },
-        },
-        autoplay: {
-            delay: 6000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-        },
-        breakpoints: {
-            1024: {
-                creativeEffect: {
-                    prev: {
-                        scale: 1.1,
-                        opacity: 0.5,
-                    },
-                    next: {
-                        scale: 1.1,
-                        opacity: 0.5,
-                    },
-                },
-            },
-
-
-        },
-
-
-        pagination: {
-            el: ".lasting-paginations",
-            clickable: true,
-        },
-        navigation: {
-            prevEl: '.newCarousel-prev',
-            nextEl: '.newCarousel-next',
-        },
-
-    };
-
-    var newCarousel = new Swiper('.indexMaskCarousel', newCarousels);
-
-
-
-
-
-
-    var indexTextCarousel = new Swiper(".indexTextCarousel", {
-        modules: [A, P, N, Px, EC, C, T],
-        slidesPerView: 1,
-        speed: 1000,
-        Parallax: true,
-
-        pagination: {
-            el: ".lasting-pagination",
-            clickable: true,
-        },
-        navigation: {
-            prevEl: '.indexTextCarousel-prev',
-            nextEl: '.indexTextCarousel-next',
-        },
-    });
-
-    newCarousel.controller.control = indexTextCarousel;
-    indexTextCarousel.controller.control = newCarousel;
-</script>
-
-<script>
-    var swiperNewCarousel = new Swiper(".swiperNewCarousel", {
-        modules: [A, P, N, Px, EC, C],
-        slidesPerView: 1,
-
-        speed: 1200,
-        parallax: true,
-        loop: false,
-        autoplay: false,
-        autoplay: {
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-        },
-        navigation: {
-            prevEl: '.swiperNewCarousel-prev',
-            nextEl: '.swiperNewCarousel-next',
-        },
-        breakpoints: {
-            769: {
-                slidesPerView: 1,
-            },
-
-            1440: {
-                slidesPerView: 1.2,
-            },
-            1520: {
-                slidesPerView: 1.3,
-            },
-            1680: {
-                slidesPerView: 1.5,
-            }
-        },
-        lazy: true,
-        pagination: {
-            el: ".about-pagination",
-            speed: 1000,
-            clickable: true,
-            dynamicBullets: true,
-        },
-    });
-
-    function isElementInView(element) {
-        const rect = element.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
-
-    function checkSwiperVisibility() {
-        const swiperElement = document.querySelector('.swiperNewCarousel'); // Swiper elementinizi seçin
-        if (isElementInView(swiperElement)) {
-            // Eğer swiper görünüyorsa ve daha önce autoplay başlamadıysa
-            if (!swiperNewCarousel.autoplay.running) {
-                swiperNewCarousel.autoplay.start();
-            }
-        } else {
-            // Swiper görünmüyorsa ve autoplay çalışıyorsa durdur
-            if (swiperNewCarousel.autoplay.running) {
-                swiperNewCarousel.autoplay.stop();
-            }
-        }
-    }
-
-    // Scroll event listener ekleyin
-    window.addEventListener('scroll', checkSwiperVisibility);
-    // Sayfa yüklendiğinde de kontrol edin
-    window.addEventListener('load', checkSwiperVisibility);
-
-
-
-    let newSlider = new Swiper(".other-products-slider", {
-        modules: [A, P, N, Px],
-        slidesPerView: 1,
-        speed: 1000,
-        spaceBetween: 0,
-        loop: true,
-        resistance: true,
-        resistanceRatio: 0,
-        centeredSlides: true,
-        watchSlidesProgress: true,
-        autoplay: false,
-        autoplay: {
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-        },
-        navigation: {
-            nextEl: ".other-product-next",
-            prevEl: ".other-product-prev",
-
-        },
-        breakpoints: {
-            600: {
-                slidesPerView: 1.2,
-            },
-            820: {
-                slidesPerView: 2,
-                centeredSlides: false,
-            },
-
-            1380: {
-                slidesPerView: 3,
-            },
-
-            1560: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-            },
-            1680: {
-                slidesPerView: 3,
-                spaceBetween: 40,
-            },
-        },
-    })
-
-
-    function isElementInView(element) {
-        const rect = element.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
-
-    function checkSwiperVisibility() {
-        const swiperElement = document.querySelector('.other-products-slider'); // Swiper elementinizi seçin
-        if (isElementInView(swiperElement)) {
-            // Eğer swiper görünüyorsa ve daha önce autoplay başlamadıysa
-            if (!newSlider.autoplay.running) {
-                newSlider.autoplay.start();
-            }
-        } else {
-            // Swiper görünmüyorsa ve autoplay çalışıyorsa durdur
-            if (newSlider.autoplay.running) {
-                newSlider.autoplay.stop();
-            }
-        }
-    }
-
-    // Scroll event listener ekleyin
-    window.addEventListener('scroll', checkSwiperVisibility);
-    // Sayfa yüklendiğinde de kontrol edin
-    window.addEventListener('load', checkSwiperVisibility);
-
-
-    let projectMobileSliderParams = {
-        modules: [A, N, Px, ],
-        slidesPerView: 1,
-        speed: 1000,
-        spaceBetween: 24,
-        loop: false,
-        resistance: true,
-        resistanceRatio: 0,
-        watchSlidesProgress: true,
-        navigation: {
-            nextEl: ".project-mobile-next",
-            prevEl: ".project-mobile-prev",
-            disabledClass: "project-mobile-disabled"
-        },
-        on: {
-            slideChange: function() {
-                let nextEl = document.querySelector(".project-mobile-next"),
-                    prevEl = document.querySelector(".project-mobile-prev"),
-                    slides = document.querySelectorAll(".project-mobile-slider .swiper-slide");
-
-                nextEl.classList.remove("project-mobile-disabled")
-                prevEl.classList.remove("project-mobile-disabled")
-                slides.forEach(slide => {
-                    if (slides.length - 1 === this.activeIndex) {
-                        nextEl.classList.add("project-mobile-disabled")
+    subMenu.forEach((t, i) => {
+        t.addEventListener('click', () => {
+            // Remove the class from all elements
+            subMenu.forEach((item) => {
+                if (item !== t) {
+                    const nextSibling = item.parentElement;
+                    if (nextSibling) {
+                        nextSibling.classList.remove(togglerClassName);
                     }
-                })
-            },
-        }
-    }
-    let projectMobileSlider = new Swiper(".project-mobile-slider", {
-        modules: [A, N, Px, ],
-        slidesPerView: 1,
-        speed: 1000,
-        spaceBetween: 24,
-        loop: false,
-        resistance: true,
-        resistanceRatio: 0,
-        watchSlidesProgress: true,
-        navigation: {
-            nextEl: ".project-mobile-next",
-            prevEl: ".project-mobile-prev",
-            disabledClass: "project-mobile-disabled"
-        },
-        on: {
-            slideChange: function() {},
-        }
-    })
+                }
+            });
+            // Add the class to the clicked element
+            const nextSibling = t.parentElement;
+            if (nextSibling) {
+                nextSibling.classList.toggle(togglerClassName);
+                document.querySelector("body").classList.toggle("overflow-hidden");
 
-
-
-    var swiperCard = new Swiper(".mobileCards", {
-        modules: [A, P, N, Px, EC, C, ECards],
-        effect: "cards",
-        grabCursor: true,
-        initialSlide: 2, // Kartların başlangıçta ters sırayla olması için ilk görünen kartın indeksi
-        slidesPerView: "auto",
-        loop: false, // Slider sonsuz döngü içinde olsun
-        autoplay: false,
-        autoplay: {
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-        },
-        pagination: {
-            el: ".lasting-pagination",
-            clickable: true,
-        },
-        cardsEffect: {
-            perSlideRotate: 10, // Rotation angle of second and subsequent slides
-            slideShadows: false, // Shadow presence of second and subsequent slides(true/false)
-
-        },
+            }
+        });
     });
 
-    function isElementInView(element) {
-        const rect = element.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
 
-    function checkSwiperVisibility() {
-        const swiperElement = document.querySelector('.mobileCards'); // Swiper elementinizi seçin
-        if (isElementInView(swiperElement)) {
-            // Eğer swiper görünüyorsa ve daha önce autoplay başlamadıysa
-            if (!swiperCard.autoplay.running) {
-                swiperCard.autoplay.start();
-            }
-        } else {
-            // Swiper görünmüyorsa ve autoplay çalışıyorsa durdur
-            if (swiperCard.autoplay.running) {
-                swiperCard.autoplay.stop();
-            }
-        }
-    }
 
-    // Scroll event listener ekleyin
-    window.addEventListener('scroll', checkSwiperVisibility);
-    // Sayfa yüklendiğinde de kontrol edin
-    window.addEventListener('load', checkSwiperVisibility);
+
+    let closed = document.querySelectorAll('[data-tabs-closed]');
+    let subMenu2 = document.querySelectorAll('[data-tabs-subsMenu2]');
+
+    // tabs.forEach((t, i) => {
+    //     t.addEventListener('click', () => {
+    //         t.parentElement.classList.toggle(togglerClassName);
+
+    //         close.forEach((item) => {
+    //             item.classList.remove(togglerClassName);
+    //         });
+    //     })
+    // });
+
+    subMenu2.forEach((t, i) => {
+        t.addEventListener('click', () => {
+            // Remove the class from all elements
+            subMenu2.forEach((item) => {
+                if (item !== t) {
+                    const nextSibling = item.parentElement;
+                    if (nextSibling) {
+                        nextSibling.classList.remove(togglerClassName);
+                    }
+                }
+            });
+            // Add the class to the clicked element
+            const nextSibling = t.parentElement;
+            if (nextSibling) {
+                nextSibling.classList.toggle(togglerClassName);
+                document.querySelector("body").classList.toggle("overflow-hidden");
+
+            }
+        });
+    });
 </script>
-</body>
-
-</html>
-
-

@@ -1,7 +1,10 @@
-@include('partials.header')
+        @include('partials.header')
 
+        @yield('content')
 
-@yield('content')
+        @include('partials.footer')
 
-        
-@include('partials.footer')
+        @yield('scripts')
+
+    </body>
+</html>

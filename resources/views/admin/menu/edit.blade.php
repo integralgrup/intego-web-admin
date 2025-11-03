@@ -67,11 +67,11 @@
                                                 <option value="">Seçiniz</option>
                                                 <option value="about" {{ $menu->page_type == 'about' ? 'selected' : '' }}>Kurumsal</option>
                                                 <option value="contact" {{ $menu->page_type == 'contact' ? 'selected' : '' }}>İletişim</option>
-                                                <option value="sector" {{ $menu->page_type == 'sector' ? 'selected' : '' }}>Sektörler</option>
-                                                <option value="brand" {{ $menu->page_type == 'brand' ? 'selected' : '' }}>Markalar</option>
+                                                <option value="product" {{ $menu->page_type == 'product' ? 'selected' : '' }}>Ürünler</option>
+                                                <option value="furniture" {{ $menu->page_type == 'furniture' ? 'selected' : '' }}>Mobilya</option>
+                                                <option value="play_ground" {{ $menu->page_type == 'play_ground' ? 'selected' : '' }}>Oyun Alanı</option>
+                                                <option value="project" {{ $menu->page_type == 'project' ? 'selected' : '' }}>Proje</option>
                                                 <option value="blog" {{ $menu->page_type == 'blog' ? 'selected' : '' }}>Blog</option>
-                                                <option value="career" {{ $menu->page_type == 'career' ? 'selected' : '' }}>Kariyer</option>
-                                                <option value="catalog" {{ $menu->page_type == 'catalog' ? 'selected' : '' }}>Katalog</option>
                                                 <option value="contact" {{ $menu->page_type == 'contact' ? 'selected' : '' }}>İletişim</option>
                                                 <option value="page" {{ $menu->page_type == 'page' ? 'selected' : '' }}>Özel Sayfa</option>
                                             </select>
@@ -79,10 +79,16 @@
                                         <!-- Parent Menu Dropdown -->
                                         <div class="mb-3">
                                             <label for="parent_menu_id_{{$menu->lang}}" class="form-label">Üst Menü ({{ $menu->lang }})</label>
-                                            <select name="parent_menu_id_{{$menu->lang}}" id="parent_menu_id_{{$menu->lang}}" class="form-select">
+                                            
+                                            <select name="parent_menu_id_{{$language->lang_code}}" id="parent_menu_id_{{$language->lang_code}}" class="form-select" >
                                                 <option value="0">Seçiniz</option>
                                                 @foreach($parentMenus as $parentMenu)
                                                     <option value="{{ $parentMenu->menu_id }}" {{ $parentMenu->menu_id == $menu->parent_menu_id ? 'selected' : '' }}>{{ $parentMenu->title }}</option>
+                                                    @if($parentMenu->children)
+                                                        @foreach($parentMenu->children as $childMenu)
+                                                            <option value="{{ $childMenu->menu_id }}" {{ $childMenu->menu_id == $menu->parent_menu_id ? 'selected' : '' }}>-- {{ $childMenu->title }}</option>
+                                                        @endforeach
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>

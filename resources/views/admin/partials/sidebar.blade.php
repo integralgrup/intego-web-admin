@@ -62,21 +62,39 @@
                     </a>
                   </li>
                   <li class="nav-item">
+                    <a href="{{ route('admin.slider2.index') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Slider 2</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.product.index') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Ürünler</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.product.category.index') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Ürün Kategorileri</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.playground.index') }}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Oyun Alanları</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
                     <a href="{{ route('admin.blog') }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Blog</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ route('admin.brand') }}" class="nav-link">
+                    <a href="{{ route('admin.project.index') }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
-                      <p>Markalar</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{ route('admin.sector.index') }}" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Sektörler</p>
+                      <p>Projeler</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -86,9 +104,9 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ route('admin.catalog.group.index') }}" class="nav-link">
+                    <a href="{{ route('admin.country.index') }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
-                      <p>Katalog Grupları</p>
+                      <p>Ülke Yönetimi</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -109,35 +127,7 @@
                       <p>Footer İletişim Yönetimi</p>
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="nav-icon bi bi-box-arrow-in-right"></i>
-                    <p>
-                      Kariyer
-                      <i class="nav-arrow bi bi-chevron-right"></i>
-                    </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                        <a href="{{ route('admin.career.create') }}" class="nav-link">
-                          <i class="nav-icon bi bi-circle"></i>
-                          <p>Kariyer Yönetimi</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="{{ route('admin.career.job.index') }}" class="nav-link">
-                          <i class="nav-icon bi bi-circle"></i>
-                          <p>İş İlanları</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="{{ route('admin.career.slider.index') }}" class="nav-link">
-                          <i class="nav-icon bi bi-circle"></i>
-                          <p>Kariyer Slider</p>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
+                  
                   
                 </ul>
               </li>

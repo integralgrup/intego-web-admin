@@ -74,9 +74,6 @@
                                                 <input type="text" class="form-control" id="title_1_{{ $about->lang }}" name="title_1_{{ $about->lang }}" value="{{ $about->title_1 }}" required>
                                             </div>
                                         </div>
-                                        <!-- title_1 -->
-                                        
-
                                         <div class="mb-3">
                                             <div>
                                                 <label for="banner_image_{{ $about->lang }}" class="form-label">Header Görsel ({{ $about->lang }})</label>
@@ -87,7 +84,11 @@
                                                     <input type="hidden" class="form-control mt-2" name="old_banner_image_{{ $about->lang }}" value="{{ $about->banner_image }}" readonly>
                                                 @endif
                                             </div>
-                                            <div>
+                                            
+                                            
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="mb-3">
                                                 <label for="image_{{ $about->lang }}" class="form-label">Görsel ({{ $about->lang }})</label>
                                                 <input type="file" class="form-control" id="image_{{ $about->lang }}" name="image_{{ $about->lang }}" accept="image/*">
                                                 @if($about->image)
@@ -96,16 +97,19 @@
                                                     <input type="hidden" class="form-control mt-2" name="old_image_{{ $about->lang }}" value="{{ $about->image }}" readonly>
                                                 @endif
                                             </div>
-                                            <div>
+                                            
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="mb-3">
                                                 <label for="description_{{ $about->lang }}" class="form-label">Açıklama ({{ $about->lang }})</label>
                                                 <textarea class="form-control" id="description_{{ $about->lang }}" name="description_{{ $about->lang }}" rows="3" required>{{ $about->description }}</textarea>
                                             </div>
+                                            <div class="mb-3">
+                                                <label for="alt_{{ $about->lang }}" class="form-label">Alt Metin ({{ $about->lang }})</label>
+                                                <input type="text" class="form-control" id="alt_{{ $about->lang }}" name="alt_{{ $about->lang }}" value="{{ $about->alt }}" required>
+                                            </div>
                                         </div>
                                         
-                                        <div class="mb-3">
-                                            <label for="alt_{{ $about->lang }}" class="form-label">Alt Metin ({{ $about->lang }})</label>
-                                            <input type="text" class="form-control" id="alt_{{ $about->lang }}" name="alt_{{ $about->lang }}" value="{{ $about->alt }}" required>
-                                        </div>
                                         <div class="mb-3">
                                             <label for="bg_video_{{ $about->lang }}" class="form-label">Arka Plan Videosu ({{ $about->lang }})</label>
                                             <input type="file" class="form-control" id="bg_video_{{ $about->lang }}" name="bg_video_{{ $about->lang }}" accept="video/*">

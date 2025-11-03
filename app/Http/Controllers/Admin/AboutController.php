@@ -70,8 +70,6 @@ class AboutController extends Controller
                             'description_' . $language->lang_code => 'required|string',
                             'banner_image_' . $language->lang_code => 'nullable|image|max:2048',
                             'alt_' . $language->lang_code => 'required|string|max:255',
-                            //bg_video should be 50MB limit
-                            'bg_video_' . $language->lang_code => 'nullable|file|mimetypes:video/mp4,video/avi,video/mpeg,video/quicktime|max:51200', // 50MB
                             'mission_title_' . $language->lang_code => 'required|string|max:255',
                             'mission_text_' . $language->lang_code => 'required|string',
                             'mission_image_' . $language->lang_code => 'nullable|image|max:2048',
@@ -98,13 +96,6 @@ class AboutController extends Controller
                         //dd($imageName);
                     }else{
                         $bannerImageName = $request->input('old_banner_image_' . $language->lang_code, null); // Use old image if no new image is uploaded
-                    }
-
-                    if ($request->hasFile('bg_video_' . $language->lang_code) || $request->hasFile('bg_video_en')) {
-                        $tmpBgVideoPath = createTmpFile($request, 'bg_video_en', $languages[0]);
-                        $videoName = moveFile($request,$language, 'bg_video_' . $language->lang_code, 'bg_video_en', 'title_' . $language->lang_code, 'title_en',$language->images_folder, $tmpBgVideoPath);
-                    } else {
-                        $videoName = $request->input('old_bg_video_' . $language->lang_code, null); // Use old video if no new video is uploaded
                     }
 
                     if ($request->hasFile('mission_image_' . $language->lang_code) || $request->hasFile('mission_image_en')) {
@@ -136,7 +127,6 @@ class AboutController extends Controller
                             'image' => $imageName, // save relative path
                             'banner_image' => $bannerImageName, // save relative path
                             'alt' => $request->input('alt_' . $language->lang_code) ?: $request->input('alt_en'),
-                            'bg_video' => $videoName, // save relative path
                             'mission_title' => $request->input('mission_title_' . $language->lang_code) ?: $request->input('mission_title_en'),
                             'mission_text' => $request->input('mission_text_' . $language->lang_code) ?: $request->input('mission_text_en'),
                             'mission_image' => $missionImageName, // save relative path
@@ -152,12 +142,11 @@ class AboutController extends Controller
                 }
                 //die('here');
                 @unlink($tmpImgPath);
-                @unlink($tmpBgVideoPath);
                 @unlink($tmpMissionImagePath);
                 @unlink($tmpVisionImagePath);
                 @unlink($tmpbannerImgPath);
 
-            return redirect()->route('admin.about')->with('success', 'Hakkımızda içeriği başarıyla kaydedildi.');
+            return redirect()->route('admin.about.edit')->with('success', 'Hakkımızda içeriği başarıyla kaydedildi.');
         } catch (\Exception $e) {
             throw $e;
             //return redirect()->back()->withErrors(['error' => 'Hata oluştu: ' . $e->getMessage()]);

@@ -74,11 +74,11 @@
                                                 <option value="">Seçiniz</option>
                                                 <option value="about">Kurumsal</option>
                                                 <option value="contact">İletişim</option>
-                                                <option value="sector">Sektörler</option>
-                                                <option value="brand">Markalar</option>
+                                                <option value="product">Ürünler</option>
+                                                <option value="furniture">Mobilya</option>
+                                                <option value="play_ground">Oyun Alanı</option>
+                                                <option value="project">Proje</option>
                                                 <option value="blog">Blog</option>
-                                                <option value="career">Kariyer</option>
-                                                <option value="catalog">Katalog</option>
                                                 <option value="contact">İletişim</option>
                                                 <option value="page">Özel Sayfa</option>
                                             </select>
@@ -90,6 +90,11 @@
                                                 <option value="0">Seçiniz</option>
                                                 @foreach($parentMenus as $parentMenu)
                                                     <option value="{{ $parentMenu->menu_id }}">{{ $parentMenu->title }}</option>
+                                                    @if($parentMenu->children)
+                                                        @foreach($parentMenu->children as $childMenu)
+                                                            <option value="{{ $childMenu->menu_id }}">-- {{ $childMenu->title }}</option>
+                                                        @endforeach
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -126,6 +131,11 @@
                                             </select>   
 
                                             
+                                        </div>
+                                        <!-- URL Block -->
+                                        <div class="mb-3">
+                                            <label for="url_block_{{$language->lang_code}}" class="form-label">URL Engelleme ({{ $language->lang_code }})</label>
+                                            <input type="checkbox" class="form-check-input" id="url_block_{{$language->lang_code}}" name="url_block_{{$language->lang_code}}" >
                                         </div>
 
                                         <!-- Submit Button -->

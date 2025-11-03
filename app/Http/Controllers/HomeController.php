@@ -4,22 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Slider;
+use App\Models\Slider2;
 use App\Models\Language;
-use App\Models\Sector;
-use App\Models\Brand;
-use App\Models\BrandSlider1;
-use App\Models\BrandSlider2;
 use App\Models\Blog;
 use App\Models\BlogSlider;
+use App\Models\Product;
+use App\Models\Playground;
 use App\Models\About;
 use App\Models\Menu;
-use App\Models\Career;
-use App\Models\CareerJob;
-use App\Models\CareerSlider;
-use App\Models\Catalog;
-use App\Models\CatalogGroup;
 use App\Models\Office;
 use App\Models\Page;
+use App\Models\Project;
 use Illuminate\Support\Facades\DB;
 
 
@@ -27,21 +22,23 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $sliders = Slider::where('lang', app()->getLocale())->get();
+        $slider = Slider::where('lang', app()->getLocale())->get();
+        $slider2 = Slider2::where('lang', app()->getLocale())->get();
         $languages = Language::all();
         
-        $brands = Brand::where('lang', app()->getLocale())->get();
         $blogs = Blog::where('lang', app()->getLocale())->orderBy('sort')->get();
         $about = About::where('lang', app()->getLocale())->first();
+        $products = Product::where('lang', app()->getLocale())->get();
+        $projects = Project::where('lang', app()->getLocale())->get();
 
-        //dd($brands);
+        //dd($products);
 
-        return view('home', compact('sliders', 'languages', 'brands', 'blogs', 'about'));
+        return view('home', compact('slider', 'slider2', 'languages', 'blogs', 'about', 'products', 'projects'));
     }
 
     public function route($slug, $slug2 = null)
     {
-
+        
         if($slug == 'copy-db') {
 
             $lang_array = ['es', 'fr', 'ru', 'ae']; // Add more languages as needed
@@ -63,72 +60,46 @@ class HomeController extends Controller
             $seo = $about;
             $how_we_do = DB::table('about_how_we_do')->where('lang', app()->getLocale())->get()->toArray();
             $what_we_do =  DB::table('about_what_we_do')->where('lang', app()->getLocale())->get()->toArray();
-            $memberships = DB::table('about_memberships')->where('lang', app()->getLocale())->get()->toArray();
+            
             //debug($memberships);
-            $politics = DB::table('about_politics')->where('lang', app()->getLocale())->get()->toArray();
+            
             //dd($politics);
-            return view('about', compact('about', 'how_we_do', 'what_we_do', 'memberships', 'politics', 'seo'));
+            return view('about', compact('about', 'how_we_do', 'what_we_do', 'seo'));
         }
 
-        if($menu->page_type == 'sector') {
+        if($menu->page_type == 'project') {
             if($slug2!= null) {
-                $sector = Sector::where(['lang' => app()->getLocale(), 'seo_url' => $slug2])->first();
-                $slider1 = DB::table('sector_slider_1')->where(['lang' => app()->getLocale(), 'sector_id' => $sector->sector_id])->get();
-                $slider2 = DB::table('sector_slider_2')->where(['lang' => app()->getLocale(), 'sector_id' => $sector->sector_id])->get();
-                $sector_id = $sector->sector_id;
-                // Get brands associated with the sector, brand's sector_ids is a comma-separated string
-                $brands = Brand::where('lang', app()->getLocale())
-                                ->whereRaw("FIND_IN_SET(?, sector_ids)", [$sector_id])
-                                ->get();
-                $seo = $sector;
-                return view('sector', compact('sector', 'slider1', 'slider2', 'brands', 'seo'));
+                $project = Project::where(['lang' => app()->getLocale(), 'seo_url' => $slug2])->with(['gallery', 'country'])->firstOrFail();
+                $seo = $project;
+                //dd($project);
+                return view('project-detail', compact('project', 'seo'));
+            }else{
+                $projects = Project::where(['lang' => app()->getLocale()])->orderBy('sort')->with(['gallery', 'country'])->get()->toArray();
+                //dd($projects);
+                return view('projects', compact('projects'));
             }
-            
         }
 
-        if($menu->page_type == 'career') {
-            $career = Career::where(['lang' => app()->getLocale()])->first();
-            $seo = $career;
-            $careerJobs = CareerJob::where(['lang' => app()->getLocale()])->get();
-            $careerSlider = CareerSlider::where(['lang' => app()->getLocale()])->get();
+        if($menu->page_type == 'product') {
             if($slug2!= null) {
-                $careerJob = CareerJob::where(['lang' => app()->getLocale(), 'seo_url' => $slug2])->first();
-                return view('career-job', compact('career', 'careerJobs', 'careerJob', 'seo'));
+                $product = Product::where(['lang' => app()->getLocale(), 'seo_url' => $slug2])->firstOrFail();
+                $seo = $product;
+                return view('product-detail', compact('product', 'seo'));
+            }else{
+                $products = Product::where(['lang' => app()->getLocale()])->orderBy('sort')->get()->toArray();
+                return view('products', compact('products'));
             }
-            return view('career', compact('career', 'careerJobs', 'careerSlider', 'seo'));
         }
 
-        if($menu->page_type == 'brand') {
+        if($menu->page_type == 'play_ground') {
             if($slug2!= null) {
-                $brand = Brand::where(['lang' => app()->getLocale(), 'seo_url' => $slug2])->with(['slider1', 'slider2', 'gallery'])->first();
-                $seo = $brand;
-                //dd($brand);
-                return view('brand', compact('brand', 'seo'));
+                $play_ground = Playground::where(['lang' => app()->getLocale(), 'seo_url' => $slug2])->with(['images', 'gallery'])->firstOrFail();
+                
+                $seo = $play_ground;
+                return view('playground', compact('play_ground', 'seo'));
             }
-            
-        }
 
-        if($menu->page_type == 'catalog') {
-            
-            if($slug2!= null) {
-                $catalogGroup = CatalogGroup::where([
-                    'lang' => app()->getLocale(),
-                    'seo_url' => $slug2,
-                ])
-                ->with([
-                    'catalogs' => function ($q) {
-                        $q->where('lang', app()->getLocale())
-                          ->with(['files' => function ($q2) {
-                              $q2->where('lang', app()->getLocale());
-                          }]);
-                    }
-                ])  
-                // eager load related catalogs
-                ->firstOrFail();
-                $seo = $catalogGroup;
-                //dd($catalogGroup);
-                return view('catalog', compact('catalogGroup', 'seo'));
-            }
+            //dd($slug);
         }
 
         if($menu->page_type == 'blog') {

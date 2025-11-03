@@ -13,6 +13,8 @@
     <!-- Önbellek tutmasın diye ekledim; '?id<?= rand(); ?>' yazısını silersin -->
     <link rel="stylesheet" href="../assets/css/style.css?id<?= rand(); ?>">
     <link rel="stylesheet" href="../assets/css/tailwind.css?id<?= rand(); ?>">
+    <!-- robots meta -->
+    <meta name="robots" content="noindex, nofollow">
 </head>
 
 <body class="antialiased font-sans">
@@ -28,745 +30,129 @@
 
 </style>
 
-
+<?php 
+    $menuItems = \App\Models\Menu::where(['lang' => app()->getLocale(), 'parent_menu_id' => 0, 'menu_type' => 'header'])->with('children')->orderBy('sort')->get();
+?>
 <header class="[&.active]:!translate-y-0 group/header  header-field h-[160px] [&.is-fixed]:h-[130px] md:h-[120px] sm:[&.is-fixed]:h-[100px] min-lg:[&.sub-about]:[&.is-fixed]:opacity-0 min-lg:[&.sub-about]:[&.is-fixed]:pointer-events-none min-lg:[&.sub-about]:[&.is-fixed]:h-0  z-100 fixed min-md:[&.sub-page]:[&.is-hidden]:-!translate-y-full w-full left-0 [&.is-fixed]:shadow-xl top-0 duration-500 bg-transparent will-change-[height,transform] [&.is-fixed]:!top-0 [&.is-fixed]:!translate-y-0 [&.is-fixed]:!bg-white [&.is-fixed]:shadow-header [&.is-hidden.is-fixed]:!-translate-y-full [&.is-hidden.is-fixed]:shadow-none [&.no-scroll]:absolute [&.no-scroll]:!transform-none [&.no-scroll]:!shadow-none peer md:bg-white">
     <div class="container max-w-[1600px] mx-auto h-full 2xs:px-[20px]">
         <div class="wrapper flex justify-between items-center h-full logo-section">
-            <a href="index.php" class="logo lg:w-[120px] lg:h-[80px] block xs:w-[150px] xs:h-[60px]">
+            <a href="<?=env('HTTP_DOMAIN')?>" class="logo lg:w-[120px] lg:h-[80px] block xs:w-[150px] xs:h-[60px]">
                 <img class="w-full h-full object-contain object-center" src="../assets/image/logo/logo.png" alt="">
             </a>
             <div class="  menu-field flex items-center justify-center gap-[100px] 2xl:gap-[50px] xl:gap-[25px] lg:gap-[15px]">
                 <ul class="navMenu md:hidden md:overflow-y-auto md:max-h-[calc(100dvh-120px)] md:[&.active]:flex md:absolute md:left-0 md:top-full md:w-full md:flex-col md:bg-secondary md:rounded-b-[30px] flex justify-between items-center gap-[60px] 2xl:gap-[40px] lg:gap-[20px] sm:gap-0 md:items-start">
-                    <li class="md:pl-[30px] sm:py-[15px] md:w-full sm:border-0 sm:border-b sm:border-solid sm:border-black/15 group/sub-menu before:absolute before:bottom-0 before:left-0 before:w-0 before:hover:w-full before:duration-500 before:h-[3px] before:rounded-full before:hover:bg-secondary relative group-[&.rtl]/html:text-end">
-                        <a class="text-gray min-md:group-hover/sub-menu:text-black md:text-white duration-500 text-[18px] lg:text-[17px] leading-[30px] font-semibold w-full block group-[&.rtl]/html:text-end" href="page-about.php">About</a>
-                    </li>
-                    <li data-toggle data-target="#offer|body|header" class="md:pl-[30px] sm:py-[15px] sm:border-0 sm:border-b sm:border-solid sm:border-black/15 group/tabs trigger-items tab md:w-full offer cursor-pointer group/sub-menu before:absolute before:bottom-0 before:left-0 before:w-0 before:hover:w-full before:duration-500 before:h-[3px] before:rounded-full before:hover:bg-secondary relative group-[&.rtl]/html:text-end">
-                        <span class=" text-gray sub-menu-item md:pointer-events-auto md:z-20 relative min-md:group-hover/sub-menu:text-black md:text-white duration-500 text-[18px] lg:text-[17px] leading-[30px] font-semibold w-full">Products</span>
-                        <div data-tabs-subsMenu class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-6 top-[15px] w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
-                            <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 md:group-[&.isDrop]/tabs:rotate-180 rounded-full lg:text-white lg:flex"></div>
-                        </div>
-                        <section id="offer" class="sub-menu-trigger trigger md:py-[15px] md:hidden md:group-[&.isDrop]/tabs:block sm:overflow-y-auto  sm:h-full min-md:pointer-events-none min-md:opacity-0 min-md:[&.active]:opacity-100 w-screen h-screen !top-0 md:w-full md:h-full min-md:[&.active]:pointer-events-auto group/wrapper fixed md:relative overflow-hidden z-[200] md:opacity-100 t right-0 flex items-end justify-start bg-black/50 md:bg-transparent duration-500">
-                            <div class="min-md:-translate-x-[100%] lg:bg-[#1679BE] lg:rounded-tl-[20px] lg:rounded-bl-[20px] min-md:group-[&.active]/wrapper:-translate-x-0 duration-500 group relative z-50 w-1/3 lg:w-1/2 md:w-full min-lg:bg-secondary min-md:rounded-tr-[80px] ">
-                                <div class="absolute top-0 left-0 w-full h-full pointer-events-none md:hidden">
-                                    <img class="w-full h-full object-cover object-center min-md:rounded-tr-[80px]" src="../assets/image/product2.png" alt="">
+                    <?php foreach($menuItems as $menuItem): ?> 
+                        @if($menuItem->page_type == 'product')
+                            <li data-toggle data-target="#offer|body|header" class="md:pl-[30px] sm:py-[15px] sm:border-0 sm:border-b sm:border-solid sm:border-black/15 group/tabs trigger-items tab md:w-full offer cursor-pointer group/sub-menu before:absolute before:bottom-0 before:left-0 before:w-0 before:hover:w-full before:duration-500 before:h-[3px] before:rounded-full before:hover:bg-secondary relative group-[&.rtl]/html:text-end">
+                                <span class=" text-gray sub-menu-item md:pointer-events-auto md:z-20 relative min-md:group-hover/sub-menu:text-black md:text-white duration-500 text-[18px] lg:text-[17px] leading-[30px] font-semibold w-full">Products</span>
+                                <div data-tabs-subsMenu class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-6 top-[15px] w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
+                                    <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 md:group-[&.isDrop]/tabs:rotate-180 rounded-full lg:text-white lg:flex"></div>
                                 </div>
-                                <div class="wrapper grid grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[68px] 2xl:p-8 xl:p-5 md:gap-0">
-                                    <div class="group/items md:flex-col md:items-start relative group/sub-menus flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:gap-0 min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] after:absolute after:right-[100px] after:z-[1] after:top-0 after:w-full after:h-full after:translate-x-full before:pointer-events-none after:pointer-events-none group-[&.rtl]/html:text-end">
-                                        <a href="page-product.php" class="flex items-center justify-center gap-[50px] md:group-[&.rtl]/html:w-full md:group-[&.rtl]/html:justify-end">
-                                            <div class="image aspect-[9/9] h-[90px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle2.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/items:font-bold min-md:group-hover/items:translate-x-1 duration-500 leading-[36px] text-white">Playgrounds</div>
-
-                                        </a>
-                                        <div data-tabs-subsMenu2 class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-0 top-[-7px] w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
-                                            <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 group-[&.isDrop]/items:rotate-180 rounded-full lg:text-white lg:flex"></div>
+                                @if(count($menuItem->children) > 0)
+                                <section id="offer" class="sub-menu-trigger trigger md:py-[15px] md:hidden md:group-[&.isDrop]/tabs:block sm:overflow-y-auto  sm:h-full min-md:pointer-events-none min-md:opacity-0 min-md:[&.active]:opacity-100 w-screen h-screen !top-0 md:w-full md:h-full min-md:[&.active]:pointer-events-auto group/wrapper fixed md:relative overflow-hidden z-[200] md:opacity-100 t right-0 flex items-end justify-start bg-black/50 md:bg-transparent duration-500">
+                                    <div class="min-md:-translate-x-[100%] lg:bg-[#1679BE] lg:rounded-tl-[20px] lg:rounded-bl-[20px] min-md:group-[&.active]/wrapper:-translate-x-0 duration-500 group relative z-50 w-1/3 lg:w-1/2 md:w-full min-lg:bg-secondary min-md:rounded-tr-[80px] ">
+                                        <div class="absolute top-0 left-0 w-full h-full pointer-events-none md:hidden">
+                                            <img class="w-full h-full object-cover object-center min-md:rounded-tr-[80px]" src="../assets/image/product2.png" alt="">
                                         </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/items:opacity-100 -translate-x-4 group-hover/items:translate-x-0 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                        <section class="min-md:translate-y-[100%] min-md:translate-x-[100%] min-md:group-[&.rtl]/html:right-auto min-md:group-[&.rtl]/html:left-0 min-md:group-[&.rtl]/html:translate-x-[-100%] lg:block md:w-full min-md:group-hover/sub-menus:translate-y-[0%] md:hidden md:group-[&.isDrop]/items:block sm:overflow-y-auto sm:h-full h-full pointer-events-none min-md:opacity-0 min-md:group-hover/sub-menus:opacity-100 min-md:invisible min-md:group-hover/sub-menus:visible min-md:group-hover/sub-menus:pointer-events-auto group/wrapper z-[100] fixed md:relative bottom-0 right-0 flex items-end justify-end md:bg-transparent duration-1000 ">
-                                            <div class=" duration-500 group relative z-50 w-full md:w-full  bg-[#1679BE] md:rounded-[20px] min-md:rounded-tr-[80px] group-[&.rtl]/html:rounded-tl-[80px] group-[&.rtl]/html:rounded-tr-none pl-10 py-10 md:p-0">
-                                                <div class="wrapper grid grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[40px] md:p-[3px] min-md:max-h-[660px] min-md:overflow-y-auto min-md:[direction:rtl]">
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Forest Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Ship Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Castle Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Car Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Vision Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Train Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Space Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Forest Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Ship Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Castle Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Car Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Vision Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Train Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
+                                        <div class="wrapper grid grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[68px] 2xl:p-8 xl:p-5 md:gap-0">
+                                            @foreach($menuItem->children as $childMenu)
+                                            <div class="group/items md:flex-col md:items-start relative group/sub-menus flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:gap-0 min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] after:absolute after:right-[100px] after:z-[1] after:top-0 after:w-full after:h-full after:translate-x-full before:pointer-events-none after:pointer-events-none group-[&.rtl]/html:text-end">
+                                                <a href="page-product.php" class="flex items-center justify-center gap-[50px] md:group-[&.rtl]/html:w-full md:group-[&.rtl]/html:justify-end">
+                                                    <div class="image aspect-[9/9] h-[90px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
+                                                        <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle2.png" alt="">
+                                                    </div>
+                                                    <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/items:font-bold min-md:group-hover/items:translate-x-1 duration-500 leading-[36px] text-white">Playgrounds</div>
+
+                                                </a>
+                                                @if(count($childMenu->children) > 0)
+                                                <div data-tabs-subsMenu2 class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-0 top-[-7px] w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
+                                                    <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 group-[&.isDrop]/items:rotate-180 rounded-full lg:text-white lg:flex"></div>
                                                 </div>
-                                        </section>
-                                    </div>
-                                    <div class="group/items md:flex-col md:items-start relative group/sub-menus flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:gap-0 min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] after:absolute after:right-[100px] after:z-[1] after:top-0 after:w-full after:h-full after:translate-x-full before:pointer-events-none after:pointer-events-none group-[&.rtl]/html:text-end">
-                                        <a href="page-product.php" class="flex items-center justify-center gap-[50px] md:group-[&.rtl]/html:w-full md:group-[&.rtl]/html:justify-end">
-                                            <div class="image aspect-[9/9] h-[90px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle8.png" alt="">
+                                                <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/items:opacity-100 -translate-x-4 group-hover/items:translate-x-0 duration-500 md:hidden icon icon-arrow-right-2"></i>
+                                                <section class="min-md:translate-y-[100%] min-md:translate-x-[100%] min-md:group-[&.rtl]/html:right-auto min-md:group-[&.rtl]/html:left-0 min-md:group-[&.rtl]/html:translate-x-[-100%] lg:block md:w-full min-md:group-hover/sub-menus:translate-y-[0%] md:hidden md:group-[&.isDrop]/items:block sm:overflow-y-auto sm:h-full h-full pointer-events-none min-md:opacity-0 min-md:group-hover/sub-menus:opacity-100 min-md:invisible min-md:group-hover/sub-menus:visible min-md:group-hover/sub-menus:pointer-events-auto group/wrapper z-[100] fixed md:relative bottom-0 right-0 flex items-end justify-end md:bg-transparent duration-1000 ">
+                                                    <div class=" duration-500 group relative z-50 w-full md:w-full  bg-[#1679BE] md:rounded-[20px] min-md:rounded-tr-[80px] group-[&.rtl]/html:rounded-tl-[80px] group-[&.rtl]/html:rounded-tr-none pl-10 py-10 md:p-0">
+                                                        <div class="wrapper grid grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[40px] md:p-[3px] min-md:max-h-[660px] min-md:overflow-y-auto min-md:[direction:rtl]">
+                                                            @foreach($childMenu->children as $childMenu2)
+                                                            <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
+                                                                <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
+                                                                    <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
+                                                                    <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
+                                                                </div>
+                                                            </a>
+                                                            @endforeach
+                                                        </div>
+                                                </section>
+                                                @endif
                                             </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/items:font-bold min-md:group-hover/items:translate-x-1 duration-500 leading-[36px] text-white">Game Elements</div>
-
-                                        </a>
-                                        <div data-tabs-subsMenu2 class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-0 top-0 w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
-                                            <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 group-[&.isDrop]/items:rotate-180 rounded-full lg:text-white lg:flex"></div>
+                                            @endforeach
                                         </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/items:opacity-100 -translate-x-4 group-hover/items:translate-x-0 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                        <section class="min-md:translate-y-[100%] min-md:translate-x-[100%] min-md:group-[&.rtl]/html:right-auto min-md:group-[&.rtl]/html:left-0 min-md:group-[&.rtl]/html:translate-x-[-100%] lg:block md:w-full min-md:group-hover/sub-menus:translate-y-[0%] md:hidden md:group-[&.isDrop]/items:block sm:overflow-y-auto sm:h-full h-full pointer-events-none min-md:opacity-0 min-md:group-hover/sub-menus:opacity-100 min-md:invisible min-md:group-hover/sub-menus:visible min-md:group-hover/sub-menus:pointer-events-auto group/wrapper z-[100] fixed md:relative bottom-0 right-0 flex items-end justify-end md:bg-transparent duration-1000 ">
-                                            <div class=" duration-500 group relative z-50 w-full md:w-full  bg-[#1679BE] md:rounded-[20px] min-md:rounded-tr-[80px] group-[&.rtl]/html:rounded-tl-[80px] group-[&.rtl]/html:rounded-tr-none pl-10 py-10 md:p-0">
-                                                <div class="wrapper grid grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[40px] md:p-[3px] min-md:max-h-[660px] min-md:overflow-y-auto min-md:[direction:rtl]">
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Forest Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Ship Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Castle Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Car Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Vision Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Train Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Space Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Forest Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Ship Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Castle Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Car Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Vision Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Train Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
+                                    </div>
+                                </section>
+                                @endif
+                            </li>
+                        @elseif($menuItem->page_type == 'furniture')
+                            <li data-toggle data-target="#sub|body" class="md:pl-[30px] sm:py-[15px] sm:border-0 sm:border-b sm:border-solid sm:border-black/15 group/tabs trigger-items tab sub md:w-full cursor-pointer group/sub-menu before:absolute before:bottom-0 before:left-0 before:w-0 before:hover:w-full before:duration-500 before:h-[3px] before:rounded-full before:hover:bg-secondary relative group-[&.rtl]/html:text-end">
+                                <span class="text-gray min-md:group-hover/sub-menu:text-black md:text-white  duration-500 text-[18px] lg:text-[17px] leading-[30px] font-semibold">Urban Furniture</span>
+                                <div data-tabs-subsMenu class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-6 top-[15px] w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
+                                    <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 group-[&.isDrop]/tabs:rotate-180 rounded-full lg:text-white lg:flex"></div>
+                                </div>
+                                <section id="sub" class="sub-menu-trigger trigger md:py-[15px]  md:hidden md:group-[&.isDrop]/tabs:block sm:overflow-y-auto sm:h-full min-md:pointer-events-none min-md:opacity-0 min-md:[&.active]:opacity-100 w-screen h-screen !top-0 md:w-full md:h-full min-md:[&.active]:pointer-events-auto group/wrapper fixed md:relative overflow-hidden z-[150] md:opacity-100 t right-0 flex items-end justify-start bg-black/50 md:bg-transparent duration-500">
+
+                                    <div class="min-md:-translate-x-[100%] md:translate-x-0 md:bg-[#1679BE] md:rounded-l-[20px] min-md:group-[&.active]/wrapper:-translate-x-0 duration-500 group relative z-50 w-[40%] lg:w-1/2 md:w-full   bg-secondary min-md:rounded-tr-[80px]">
+                                        <div class="absolute top-0 left-0 w-full h-full pointer-events-none md:hidden">
+                                            <img class="w-full h-full object-cover object-center min-md:rounded-tr-[80px]" src="../assets/image/product2.png" alt="">
+                                        </div>
+                                        <div class="wrapper grid grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[68px] 2xl:p-[60px] xl:p-[50px] lg:p-[15px] md:p-3 md:gap-0">
+                                            @foreach($menuItem->children as $childMenu)
+                                            <a href="page-product-detail.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
+                                                <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
+                                                    <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
+                                                        <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle2.png" alt="">
+                                                    </div>
+                                                    <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Gazebo-Camelia-Pergola</div>
                                                 </div>
-                                        </section>
-                                    </div>
-                                    <div class="group/items md:flex-col md:items-start relative group/sub-menus flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:gap-0 min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] after:absolute after:right-[100px] after:z-[1] after:top-0 after:w-full after:h-full after:translate-x-full before:pointer-events-none after:pointer-events-none group-[&.rtl]/html:text-end">
-                                        <a href="page-product.php" class="flex items-center justify-center gap-[50px] md:group-[&.rtl]/html:w-full md:group-[&.rtl]/html:justify-end">
-                                            <div class="image aspect-[9/9] h-[90px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle9.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/items:font-bold min-md:group-hover/items:translate-x-1 duration-500 leading-[36px] text-white">Rope-Track and
-                                                Balance Elements</div>
-
-                                        </a>
-                                        <div data-tabs-subsMenu2 class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-0 top-0 w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
-                                            <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 group-[&.isDrop]/items:rotate-180 rounded-full lg:text-white lg:flex"></div>
+                                                <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
+                                            </a>
+                                            @endforeach
                                         </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/items:opacity-100 -translate-x-4 group-hover/items:translate-x-0 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                        <section class="min-md:translate-y-[100%] min-md:translate-x-[100%] min-md:group-[&.rtl]/html:right-auto min-md:group-[&.rtl]/html:left-0 min-md:group-[&.rtl]/html:translate-x-[-100%] lg:block md:w-full min-md:group-hover/sub-menus:translate-y-[0%] md:hidden md:group-[&.isDrop]/items:block sm:overflow-y-auto sm:h-full h-full pointer-events-none min-md:opacity-0 min-md:group-hover/sub-menus:opacity-100 min-md:invisible min-md:group-hover/sub-menus:visible min-md:group-hover/sub-menus:pointer-events-auto group/wrapper z-[100] fixed md:relative bottom-0 right-0 flex items-end justify-end md:bg-transparent duration-1000 ">
-                                            <div class=" duration-500 group relative z-50 w-full md:w-full  bg-[#1679BE] md:rounded-[20px] min-md:rounded-tr-[80px] group-[&.rtl]/html:rounded-tl-[80px] group-[&.rtl]/html:rounded-tr-none pl-10 py-10 md:p-0">
-                                                <div class="wrapper grid grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[40px] md:p-[3px] min-md:max-h-[660px] min-md:overflow-y-auto min-md:[direction:rtl]">
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Forest Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Ship Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Castle Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Car Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Vision Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Train Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Space Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Forest Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Ship Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Castle Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Car Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Vision Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Train Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
+                                    </div>
+                                </section>
+                            </li>
+                        @elseif($menuItem->page_type == 'play_ground')
+                            <li data-toggle data-target="#subMenu|body" class="md:pl-[30px] sm:py-[15px] sm:border-0 sm:border-b sm:border-solid sm:border-black/15 group/tabs trigger-items tab md:w-full subMenu cursor-pointer group/sub-menu before:absolute before:bottom-0 before:left-0 before:w-0 before:hover:w-full before:duration-500 before:h-[3px] before:rounded-full min-md:before:hover:bg-secondary relative group-[&.rtl]/html:text-end">
+                                <span class="text-gray min-md:group-hover/sub-menu:text-black md:text-white duration-500 text-[18px] lg:text-[17px] leading-[30px] font-semibold">Playground Area</span>
+                                <div data-tabs-subsMenu class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-6 top-[15px] w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
+                                    <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 group-[&.isDrop]/tabs:rotate-180 rounded-full lg:text-white lg:flex"></div>
+                                </div>
+                                <section id="subMenu" class="sub-menu-trigger trigger md:pt-[20px] md:hidden md:group-[&.isDrop]/tabs:block sm:overflow-y-auto sm:h-full min-md:pointer-events-none min-md:opacity-0 md:opacity-100 min-md:[&.active]:opacity-100 w-screen h-screen md:w-full md:h-full min-md:[&.active]:pointer-events-auto group/wrapper fixed md:relative overflow-hidden z-[150]  top-0 right-0 flex items-end justify-start bg-black/50 md:bg-transparent duration-500">
+
+                                    <div class="min-md:-translate-x-[100%] md:translate-x-0 md:bg-[#1679BE] md:rounded-l-[20px] min-md:group-[&.active]/wrapper:-translate-x-0 duration-500 group relative z-50 w-[55%] lg:w-1/2 md:w-full   bg-secondary min-md:rounded-tr-[80px]">
+                                        <div class="absolute top-0 left-0 w-full h-full pointer-events-none md:hidden">
+                                            <img class="w-full h-full object-cover object-center min-md:rounded-tr-[80px]" src="../assets/image/product2.png" alt="">
+                                        </div>
+                                        <div class="wrapper grid grid-cols-2 md:grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[48px] md:gap-0 lg:p-3">
+                                            @foreach($menuItem->children as $childMenu)
+                                            <a href="{{env('HTTP_DOMAIN') . '/' . getUrl('playground_url') .'/' . $childMenu['seo_url']}}" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
+                                                <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
+                                                    <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
+                                                        <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle2.png" alt="">
+                                                    </div>
+                                                    <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Gardens</div>
                                                 </div>
-                                        </section>
+                                                <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
+                                            </a>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                    <div class="group/items md:flex-col md:items-start relative group/sub-menus flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:gap-0 min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] after:absolute after:right-[100px] after:z-[1] after:top-0 after:w-full after:h-full after:translate-x-full before:pointer-events-none after:pointer-events-none group-[&.rtl]/html:text-end">
-                                        <a href="page-product.php" class="flex items-center justify-center gap-[50px] md:group-[&.rtl]/html:w-full md:group-[&.rtl]/html:justify-end">
-                                            <div class="image aspect-[9/9] h-[90px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle10.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/items:font-bold min-md:group-hover/items:translate-x-1 duration-500 leading-[36px] text-white">Skate Park</div>
-
-                                        </a>
-                                        <div data-tabs-subsMenu2 class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-0 top-0 w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
-                                            <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 group-[&.isDrop]/items:rotate-180 rounded-full lg:text-white lg:flex"></div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/items:opacity-100 -translate-x-4 group-hover/items:translate-x-0 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                        <section class="min-md:translate-y-[100%] min-md:translate-x-[100%] min-md:group-[&.rtl]/html:right-auto min-md:group-[&.rtl]/html:left-0 min-md:group-[&.rtl]/html:translate-x-[-100%] lg:block md:w-full min-md:group-hover/sub-menus:translate-y-[0%] md:hidden md:group-[&.isDrop]/items:block sm:overflow-y-auto sm:h-full h-full pointer-events-none min-md:opacity-0 min-md:group-hover/sub-menus:opacity-100 min-md:invisible min-md:group-hover/sub-menus:visible min-md:group-hover/sub-menus:pointer-events-auto group/wrapper z-[100] fixed md:relative bottom-0 right-0 flex items-end justify-end md:bg-transparent duration-1000 ">
-                                            <div class=" duration-500 group relative z-50 w-full md:w-full  bg-[#1679BE] md:rounded-[20px] min-md:rounded-tr-[80px] group-[&.rtl]/html:rounded-tl-[80px] group-[&.rtl]/html:rounded-tr-none pl-10 py-10 md:p-0">
-                                                <div class="wrapper grid grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[40px] md:p-[3px] min-md:max-h-[660px] min-md:overflow-y-auto min-md:[direction:rtl]">
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Forest Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Ship Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Castle Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Car Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Vision Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Train Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Space Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Forest Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Ship Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Castle Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Car Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Vision Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Train Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                        </section>
-                                    </div>
-                                    <div class="group/items md:flex-col md:items-start relative group/sub-menus flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:gap-0 min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] after:absolute after:right-[100px] after:z-[1] after:top-0 after:w-full after:h-full after:translate-x-full before:pointer-events-none after:pointer-events-none group-[&.rtl]/html:text-end">
-                                        <a href="page-product.php" class="flex items-center justify-center gap-[50px] md:group-[&.rtl]/html:w-full md:group-[&.rtl]/html:justify-end">
-                                            <div class="image aspect-[9/9] h-[90px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle11.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/items:font-bold min-md:group-hover/items:translate-x-1 duration-500 leading-[36px] text-white">Fitness Equipment</div>
-                                        </a>
-                                        <div data-tabs-subsMenu2 class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-0 top-0 w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
-                                            <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 group-[&.isDrop]/items:rotate-180 rounded-full lg:text-white lg:flex"></div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/items:opacity-100 -translate-x-4 group-hover/items:translate-x-0 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                        <section class="min-md:translate-y-[100%] min-md:translate-x-[100%] min-md:group-[&.rtl]/html:right-auto min-md:group-[&.rtl]/html:left-0 min-md:group-[&.rtl]/html:translate-x-[-100%] lg:block md:w-full min-md:group-hover/sub-menus:translate-y-[0%] md:hidden md:group-[&.isDrop]/items:block sm:overflow-y-auto sm:h-full h-full pointer-events-none min-md:opacity-0 min-md:group-hover/sub-menus:opacity-100 min-md:invisible min-md:group-hover/sub-menus:visible min-md:group-hover/sub-menus:pointer-events-auto group/wrapper z-[100] fixed md:relative bottom-0 right-0 flex items-end justify-end md:bg-transparent duration-1000 ">
-                                            <div class=" duration-500 group relative z-50 w-full md:w-full  bg-[#1679BE] md:rounded-[20px] min-md:rounded-tr-[80px] group-[&.rtl]/html:rounded-tl-[80px] group-[&.rtl]/html:rounded-tr-none pl-10 py-10 md:p-0">
-                                                <div class="wrapper grid grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[40px] md:p-[3px] min-md:max-h-[660px] min-md:overflow-y-auto min-md:[direction:rtl]">
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Forest Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Ship Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Castle Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Car Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Vision Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Train Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Space Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Helicopter Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Forest Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Ship Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Castle Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Car Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Vision Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="page-product-detail.php" class="group/item flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] md:group-[&.rtl]/html:justify-end">
-                                                        <div class="flex items-center justify-center gap-[20px] min-md:group-hover/item:translate-x-7 duration-500">
-                                                            <div class="text-[24px] 2xl:text-[22px] lg:text-[18px] md:text-[16px] md:pointer-events-auto font-semibold duration-500 leading-[36px] text-white/75 hover:text-white">Train Series Playgrounds</div>
-                                                            <i class="flex items-center justify-center -rotate-45 text-secondary opacity-0 group-hover/item:opacity-100 duration-500 md:hidden icon icon-arrow-right-2"></i>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </li>
-                    <li data-toggle data-target="#sub|body" class="md:pl-[30px] sm:py-[15px] sm:border-0 sm:border-b sm:border-solid sm:border-black/15 group/tabs trigger-items tab sub md:w-full cursor-pointer group/sub-menu before:absolute before:bottom-0 before:left-0 before:w-0 before:hover:w-full before:duration-500 before:h-[3px] before:rounded-full before:hover:bg-secondary relative group-[&.rtl]/html:text-end">
-                        <span class="text-gray min-md:group-hover/sub-menu:text-black md:text-white  duration-500 text-[18px] lg:text-[17px] leading-[30px] font-semibold">Urban Furniture</span>
-                        <div data-tabs-subsMenu class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-6 top-[15px] w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
-                            <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 group-[&.isDrop]/tabs:rotate-180 rounded-full lg:text-white lg:flex"></div>
-                        </div>
-                        <section id="sub" class="sub-menu-trigger trigger md:py-[15px]  md:hidden md:group-[&.isDrop]/tabs:block sm:overflow-y-auto sm:h-full min-md:pointer-events-none min-md:opacity-0 min-md:[&.active]:opacity-100 w-screen h-screen !top-0 md:w-full md:h-full min-md:[&.active]:pointer-events-auto group/wrapper fixed md:relative overflow-hidden z-[150] md:opacity-100 t right-0 flex items-end justify-start bg-black/50 md:bg-transparent duration-500">
-
-                            <div class="min-md:-translate-x-[100%] md:translate-x-0 md:bg-[#1679BE] md:rounded-l-[20px] min-md:group-[&.active]/wrapper:-translate-x-0 duration-500 group relative z-50 w-[40%] lg:w-1/2 md:w-full   bg-secondary min-md:rounded-tr-[80px]">
-                                <div class="absolute top-0 left-0 w-full h-full pointer-events-none md:hidden">
-                                    <img class="w-full h-full object-cover object-center min-md:rounded-tr-[80px]" src="../assets/image/product2.png" alt="">
-                                </div>
-                                <div class="wrapper grid grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[68px] 2xl:p-[60px] xl:p-[50px] lg:p-[15px] md:p-3 md:gap-0">
-                                    <a href="page-product-detail.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle2.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Gazebo-Camelia-Pergola</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-product-detail.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle8.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Gazebo-Camelia-Pergola</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-product-detail.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle9.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Gazebo-Camelia-Pergola</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-product-detail.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle10.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Gazebo-Camelia-Pergola</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-
-                                </div>
-                            </div>
-                        </section>
-                    </li>
-                    <li data-toggle data-target="#subMenu|body" class="md:pl-[30px] sm:py-[15px] sm:border-0 sm:border-b sm:border-solid sm:border-black/15 group/tabs trigger-items tab md:w-full subMenu cursor-pointer group/sub-menu before:absolute before:bottom-0 before:left-0 before:w-0 before:hover:w-full before:duration-500 before:h-[3px] before:rounded-full min-md:before:hover:bg-secondary relative group-[&.rtl]/html:text-end">
-                        <span class="text-gray min-md:group-hover/sub-menu:text-black md:text-white duration-500 text-[18px] lg:text-[17px] leading-[30px] font-semibold">Playground Area</span>
-                        <div data-tabs-subsMenu class="sub-trigger pointer-events-auto z-[999] group/menu-icon absolute right-6 top-[15px] w-[35px] h-[35px] bg-secondary justify-center items-center hidden md:flex cursor-pointer rounded-default duration-450 lg:bg-[#1679BE] lg:rounded-[5px]">
-                            <div class="icon icon-chevron-down absolute left-1/2 -translate-x-1/2 bg-transparent duration-450 group-[&.isDrop]/tabs:rotate-180 rounded-full lg:text-white lg:flex"></div>
-                        </div>
-                        <section id="subMenu" class="sub-menu-trigger trigger md:pt-[20px] md:hidden md:group-[&.isDrop]/tabs:block sm:overflow-y-auto sm:h-full min-md:pointer-events-none min-md:opacity-0 md:opacity-100 min-md:[&.active]:opacity-100 w-screen h-screen md:w-full md:h-full min-md:[&.active]:pointer-events-auto group/wrapper fixed md:relative overflow-hidden z-[150]  top-0 right-0 flex items-end justify-start bg-black/50 md:bg-transparent duration-500">
-
-                            <div class="min-md:-translate-x-[100%] md:translate-x-0 md:bg-[#1679BE] md:rounded-l-[20px] min-md:group-[&.active]/wrapper:-translate-x-0 duration-500 group relative z-50 w-[55%] lg:w-1/2 md:w-full   bg-secondary min-md:rounded-tr-[80px]">
-                                <div class="absolute top-0 left-0 w-full h-full pointer-events-none md:hidden">
-                                    <img class="w-full h-full object-cover object-center min-md:rounded-tr-[80px]" src="../assets/image/product2.png" alt="">
-                                </div>
-                                <div class="wrapper grid grid-cols-2 md:grid-cols-1 gap-x-[5px] gap-y-[13px] h-full p-[48px] md:gap-0 lg:p-3">
-                                    <a href="page-playground-area.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle2.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Gardens</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-playground-area.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle2.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Parks</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-playground-area.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle8.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Private and
-                                                Commercial Areas</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-playground-area.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle8.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Kids Playgrounds</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-playground-area.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle9.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Building Foundations</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-playground-area.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle9.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Outdoor and
-                                                Indoor Sports Fields</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-playground-area.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle10.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Municipalities</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-playground-area.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle10.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Regula Fields</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-playground-area.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle11.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Shopping Malls</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                    <a href="page-playground-area.php" class="group/item relative group/sub-menu flex items-center justify-between p-[15px] md:p-[3px] gap-[30px] min-md:before:absolute min-md:before:top-0 min-md:before:left-0 min-md:before:w-full min-md:before:rounded-[30px] min-md:before:border min-md:before:border-solid min-md:before:border-black/0 min-md:before:h-full min-md:before:bg-white/0 min-md:hover:before:bg-white/20 min-md:hover:before:border min-md:hover:before:border-solid min-md:hover:before:border-white/40 min-md:hover:before:rounded-[30px] min-md:hover:before:[mask-image:linear-gradient(to_left,transparent_25%,black_50%)] min-md:before:[mask-image:linear-gradient(to_left,transparent_0%,black_0%)] before:pointer-events-none after:pointer-events-none md:group-[&.rtl]/html:justify-end">
-                                        <div class="flex items-center justify-center gap-[30px]  xl:gap-[20px] lg:gap-[15px]">
-                                            <div class="image aspect-[9/9] h-[90px] xl:aspect-[6/6] xl:h-[60px] [mask-image:url('../../assets/image/smallproduct.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] bg-[#F1F8FE] md:hidden">
-                                                <img class="p-3 w-full h-full object-contain object-center" src="../assets/image/product/rectangle11.png" alt="">
-                                            </div>
-                                            <div class="text-[22px] xl:text-[20px] md:text-[16px] font-semibold group-hover/item:font-bold min-md:group-hover/item:translate-x-1 duration-500 leading-[36px] text-white">Insulation Areas</div>
-                                        </div>
-                                        <i class="flex items-center justify-center pr-[30px] text-white opacity-0 group-hover/item:opacity-100 -translate-x-4 group-hover/item:translate-x-0 duration-500 icon icon-arrow-right-2 xl:hidden"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </section>
-                    </li>
-                    <li class="md:pl-[30px] sm:py-[15px] md:w-full sm:border-0 sm:border-b sm:border-solid sm:border-black/15 group/sub-menu before:absolute before:bottom-0 before:left-0 before:w-0 before:hover:w-full before:duration-500 before:h-[3px] before:rounded-full before:hover:bg-secondary relative group-[&.rtl]/html:text-end">
-                        <a class="text-gray min-md:group-hover/sub-menu:text-black md:text-white duration-500 text-[18px] lg:text-[17px] leading-[30px] font-semibold w-full block group-[&.rtl]/html:text-end" href="page-project.php">Projects</a>
-                    </li>
-                    <li class="md:pl-[30px] sm:py-[15px] md:w-full sm:border-0 sm:border-b sm:border-solid sm:border-black/15 group/sub-menu before:absolute before:bottom-0 before:left-0 before:w-0 before:hover:w-full before:duration-500 before:h-[3px] before:rounded-full before:hover:bg-secondary relative group-[&.rtl]/html:text-end">
-                        <a class="text-gray min-md:group-hover/sub-menu:text-black md:text-white duration-500 text-[18px] lg:text-[17px] leading-[30px] font-semibold w-full block group-[&.rtl]/html:text-end" href="page-new.php">News</a>
-                    </li>
-                    <li class="md:pl-[30px] sm:py-[15px] sm:border-0 sm:border-b sm:border-solid sm:border-black/15 md:w-full md:px-[30px] md:flex hidden">
-                        <a href="page-contact.php" class="group/button md:w-full flex justify-between items-center font-semibold md:justify-start gap-[27px] rounded-full relative cursor-pointer group-[&.rtl]/html:justify-end">
-                            <div class="text text-white text-[16px] z-[1]">Contact</div>
-                        </a>
-                    </li>
+                                </section>
+                            </li>
+                        @else 
+                            <li class="md:pl-[30px] sm:py-[15px] md:w-full sm:border-0 sm:border-b sm:border-solid sm:border-black/15 group/sub-menu before:absolute before:bottom-0 before:left-0 before:w-0 before:hover:w-full before:duration-500 before:h-[3px] before:rounded-full before:hover:bg-secondary relative group-[&.rtl]/html:text-end">
+                                <a class="text-gray min-md:group-hover/sub-menu:text-black md:text-white duration-500 text-[18px] lg:text-[17px] leading-[30px] font-semibold w-full block group-[&.rtl]/html:text-end" href="<?=env('HTTP_DOMAIN').'/'. $menuItem->seo_url?>">{{ $menuItem->title }}</a>
+                            </li>
+                        @endif
+                    <?php endforeach; ?>
+                    
                 </ul>
                 <div class="contact flex items-center justify-between gap-[20px] lg:gap-[10px] md:justify-center">
                     <button class="group/lang buttonLang relative drop text-[18px] leading-[30px] font-semibold flex items-center xs:pr-[40px] border-[4px] border-solid border-[#F2F3F5] px-[18px] xl:px-[10px] lg:px-[8px] py-[5px] rounded-full uppercase text-[#7B8A99] md:left-[30px] md:relative md:top-0 md:border-0 md:m-0 md:p-0 duration-500">
@@ -798,7 +184,7 @@
                         </ul>
 
                     </button>
-                    <a class="md:w-full md:px-[30px] md:hidden" href="page-contact.php">
+                    <a class="md:w-full md:px-[30px] md:hidden" href="<?=env('HTTP_DOMAIN').'/'.getUrl('contact_url')?>">
                         <div class="group/button p-[16px_40px] xl:p-[16px_30px] lg:p-[16px_26px] bg-[#1679BE] [box-shadow:4px_4px_30px_0px_rgba(22,_121,_190,_0.35)] flex justify-between items-center md:justify-center gap-[27px] rounded-full before:absolute before:left-0 before:top-0 before:hover:top-full before:w-full before:h-full before:hover:bg-[#89C8F0] overflow-hidden isolate relative before:duration-500 cursor-pointer">
                             <div class="text text-white text-[16px] z-[1] font-semibold">Contact</div>
                         </div>

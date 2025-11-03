@@ -61,24 +61,24 @@
                                         <input type="hidden" name="lang_{{ $language->lang_code }}" value="{{ $language->lang_code }}">
                                         <div class="mb-3">
                                             <label for="address_{{ $language->lang_code }}" class="form-label">Adres ({{ $language->lang_code }})</label>
-                                            <input type="text" class="form-control" id="address_{{ $language->lang_code }}" name="address_{{ $language->lang_code }}" required>
+                                            <input type="text" class="form-control" id="address_{{ $language->lang_code }}" name="address_{{ $language->lang_code }}" >
                                         </div>
                                         <!-- title_1 -->
                                         <div class="mb-3">
                                             <label for="phone_{{ $language->lang_code }}" class="form-label">Telefon ({{ $language->lang_code }})</label>
-                                            <input type="text" class="form-control" id="phone_{{ $language->lang_code }}" name="phone_{{ $language->lang_code }}" required>
+                                            <input type="text" class="form-control" id="phone_{{ $language->lang_code }}" name="phone_{{ $language->lang_code }}" >
                                         </div>
                                         <div class="mb-3">
                                             <label for="email_{{ $language->lang_code }}" class="form-label">E-posta ({{ $language->lang_code }})</label>
-                                            <input type="text" class="form-control" id="email_{{ $language->lang_code }}" name="email_{{ $language->lang_code }}" required>
+                                            <input type="text" class="form-control" id="email_{{ $language->lang_code }}" name="email_{{ $language->lang_code }}" >
                                         </div>
                                         <div class="mb-3">
                                             <label for="map_url_{{ $language->lang_code }}" class="form-label">Harita URL ({{ $language->lang_code }})</label>
-                                            <input type="text" class="form-control" id="map_url_{{ $language->lang_code }}" name="map_url_{{ $language->lang_code }}" required>
+                                            <input type="text" class="form-control" id="map_url_{{ $language->lang_code }}" name="map_url_{{ $language->lang_code }}" >
                                         </div>
                                         <div class="mb-3">
                                             <label for="facebook_url_{{ $language->lang_code }}" class="form-label">Facebook URL ({{ $language->lang_code }})</label>
-                                            <input type="text" class="form-control" id="facebook_url_{{ $language->lang_code }}" name="facebook_url_{{ $language->lang_code }}" required>
+                                            <input type="text" class="form-control" id="facebook_url_{{ $language->lang_code }}" name="facebook_url_{{ $language->lang_code }}" >
                                         </div>
                                         
                                         <!-- youtube_url -->
